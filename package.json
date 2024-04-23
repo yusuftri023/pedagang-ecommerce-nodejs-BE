@@ -1,0 +1,20 @@
+{
+  "name": "pedagang-ecommerce-nodejs-BE",
+  "version": "1.0.0",
+  "description": "Tugas Backend HMS Kelompok 5 ",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "build": "node src/index.js"
+  },
+  "author": "Yusuf, Rifky, Malik, Viqi",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "latest"
+  },
+  "dependencies": {
+    "express": "latest",
+    "cors": "latest",
+    "dotenv": "latest"
+  }
+}
