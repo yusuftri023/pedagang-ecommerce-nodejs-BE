@@ -1,20 +1,35 @@
 {
-  "name": "pedagang-ecommerce-nodejs-BE",
+  "name": "HMS-Individual-API-Project",
   "version": "1.0.0",
-  "description": "Tugas Backend HMS Kelompok 5 ",
+  "description": "tugas individu HMS API",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon src/index.js",
     "build": "node src/index.js"
   },
-  "author": "Yusuf, Rifky, Malik, Viqi",
+  "author": "Yusuf Trihartono",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-airbnb-base": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-prettier": "latest",
     "nodemon": "latest"
   },
   "dependencies": {
-    "express": "latest",
+    "bcrypt": "latest",
+    "cookie-parser": "^1.4.6",
     "cors": "latest",
-    "dotenv": "latest"
+    "dotenv": "latest",
+    "express": "latest",
+    "imagekit": "latest",
+    "jsonwebtoken": "latest",
+    "knex": "^3.1.0",
+    "midtrans-client": "^1.3.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "latest",
+    "sharp": "^0.33.3"
   }
 }

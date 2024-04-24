@@ -11,10 +11,12 @@ const order_statuses = [
   "Pesanan Dibatalkan",
 ];
 const trx = await knexConnection.transaction();
-export const orderItemsList = async (orderId) => {
+export const orderItemsList = async (orderId, page = 1, limit = 10) => {
   const result = await knexConnection
     .from("order_item")
-    .where("order_id", orderId);
+    .where("order_id", orderId)
+    .offset((page - 1) * limit)
+    .limit(limit);
   return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
 };
 export const orderData = async (id) => {
@@ -30,7 +32,7 @@ export const insertOrder = async (
 ) => {
   const { items, total_price } = orderLists;
 
-  trx("shipment")
+  await trx("shipment")
     .insert({ address_id: addressId, customer_id: customerId }, "id")
     .then(async (shipmentId) => {
       const [paymentId] = await trx("payment").insert({
@@ -59,7 +61,7 @@ export const insertOrder = async (
     .catch(trx.rollback);
   return true;
 };
-export const updateOrder = async (id, status) => {
+export const updateStatusOrder = async (id, status) => {
   const result = await knexConnection("order_detail")
     .update({
       status: status,

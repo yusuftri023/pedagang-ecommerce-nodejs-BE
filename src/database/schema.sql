@@ -17,6 +17,7 @@ CREATE TABLE address_detail(
     PRIMARY KEY(id)
 );
 CREATE TABLE customer_address(
+    selected BOOLEAN not NULL,
     customer_id BIGINT UNSIGNED not null,
     address_id BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
@@ -108,6 +109,7 @@ CREATE TABLE order_detail(
     id SERIAL,
     order_date timestamp(0) not null default now(),
     total_price INT NOT NULL,
+    status VARCHAR(25) NOT NULL,
     customer_id BIGINT UNSIGNED NOT NULL,
     shipment_id BIGINT UNSIGNED,
     payment_id BIGINT UNSIGNED,

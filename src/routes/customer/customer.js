@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   changePicture,
   changepassword,
@@ -8,15 +9,14 @@ import {
 import { imageUpload } from "../../middlewares/multer.js";
 import { imagekitUpload } from "../../middlewares/imagekit.js";
 const router = express.Router();
-
-router.get("/:id", customer);
+router.get("/profile", customer);
 router.patch(
-  "/:id/changepicture",
+  "/changepicture",
   imageUpload.single("image"),
   imagekitUpload,
   changePicture
 );
-router.patch("/:id/changepassword", changepassword);
-router.delete("/:id", deleteCustomer);
+router.patch("/changepassword", changepassword);
+router.delete("/delete", deleteCustomer);
 
 export default router;
