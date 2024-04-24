@@ -68,11 +68,10 @@ export const selectAddress = async (addressId, customerId) => {
 };
 export const deleteAddressEntry = async (id) => {
   try {
-    const result = await knexConnection("address_detail")
-      .delete()
-      .where("id", id);
+    await knexConnection("customer_address").delete().where("address_id", id);
+    await knexConnection("address_detail").delete().where("id", id);
 
-    return result;
+    return true;
   } catch (error) {
     throw new Error(error.message);
   }

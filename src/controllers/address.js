@@ -71,7 +71,7 @@ export const changeAddressDetails = async (req, res) => {
   const { address_line, city, region, postal_code } = req.body;
   const { addressId } = req.params;
   try {
-    if (address_line && city && region && postal_code) {
+    if (address_line && city && region && postal_code && addressId) {
       await updateAddress(addressId, address_line, city, region, postal_code);
       return res.status(201).json({
         success: true,
@@ -95,10 +95,9 @@ export const changeAddressDetails = async (req, res) => {
 };
 export const changeSelectedAddress = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { address_line, city, region, postal_code } = req.body;
   const { addressId } = req.params;
   try {
-    if (address_line && city && region && postal_code && addressId) {
+    if (addressId) {
       await selectAddress(addressId, customerId);
       return res.status(200).json({
         success: true,

@@ -31,12 +31,12 @@ export const updateQuantityCart = async (cartId, customerId, quantity) => {
 
 export const deleteCartEntry = async (cartId, customerId) => {
   try {
-    const result = await knexConnection("cart")
+    await knexConnection("cart")
       .delete()
       .where("id", cartId)
       .andWhere("customer_id", customerId);
 
-    return result;
+    return true;
   } catch (error) {
     throw new Error(error.message);
   }

@@ -34,7 +34,7 @@ export const insertWishlist = async (customer_id, product_id) => {
 };
 
 export const deleteWishlistEntry = async (id) => {
-  const result = await knexConnection("wishlist").delete().where("id", id);
+  await knexConnection("wishlist").delete().where("id", id);
 
-  return result;
+  return true;
 };
