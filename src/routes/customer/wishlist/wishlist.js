@@ -3,7 +3,7 @@ import {
   addWishlist,
   customerWishlist,
   deleteWishlist,
-} from "../../controllers/wishlist";
+} from "../../../controllers/wishlist.js";
 
 const router = express.Router();
 router.get("/wishlist", customerWishlist);

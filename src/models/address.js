@@ -1,4 +1,4 @@
-import { knexConnection } from "../database/config";
+import { knexConnection } from "../database/config.js";
 const trx = await knexConnection.transaction();
 export const findCustomerAddress = async (customerId) => {
   const result = await knexConnection
@@ -18,7 +18,6 @@ export const insertCustomerAdress = async (
   await trx("address_detail")
     .insert({ address_line, city, region, postal_code }, "id")
     .then((addressId) => {
-      console.log(addressId);
       trx("customer_address").insert({
         customer_id: customerId,
         address_id: addressId[0],

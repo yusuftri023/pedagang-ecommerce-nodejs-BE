@@ -4,7 +4,7 @@ import {
   insertWishlist,
   wishlistData,
   wishlistItems,
-} from "../models/wishlist";
+} from "../models/wishlist.js";
 
 export const customerWishlist = async (req, res) => {
   const { id: customerId } = req.decodedToken;

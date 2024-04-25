@@ -4,7 +4,7 @@ import {
   insertCustomerAdress,
   selectAddress,
   updateAddress,
-} from "../models/address";
+} from "../models/address.js";
 
 export const customerAddress = async (req, res) => {
   const { id: customerId } = req.decodedToken;

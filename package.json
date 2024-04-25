@@ -1,14 +1,15 @@
 {
-  "name": "HMS-Individual-API-Project",
+  "name": "pedagang-ecommerce-nodejs-BE",
   "version": "1.0.0",
   "description": "tugas individu HMS API",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
     "build": "node src/index.js"
   },
-  "author": "Yusuf Trihartono",
+  "author": "Yusuf, Rifky, Malik, Viqi",
   "license": "MIT",
   "devDependencies": {
     "eslint": "latest",

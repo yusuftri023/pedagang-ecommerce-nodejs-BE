@@ -3,8 +3,7 @@ import {
   deleteCartEntry,
   insertCart,
   updateQuantityCart,
-} from "../models/cart";
-import { customer } from "./customer";
+} from "../models/cart.js";
 
 export const cartLists = async (req, res) => {
   const { id: customerId } = req.decodedToken;

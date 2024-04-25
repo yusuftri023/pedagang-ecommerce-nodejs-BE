@@ -17,9 +17,8 @@ const logger = (req, res, next) => {
           })
         )
       : "";
-  console.log(
-    `Request ${req.method} ${req.hostname}${req.path}${query}${body}`
-  );
+
+  console.log(`Request ${req.method} ${req.hostname}${req.path}`);
   next();
 };
 export default logger;

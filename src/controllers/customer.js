@@ -4,7 +4,7 @@ import {
   insertCustomer,
   updatePassword,
   updatePicture,
-  userData,
+  userDataByEmail,
 } from "../models/customer.js";
 import { checkPassword, hashPassword } from "../utils/authBcrypt.js";
 import "dotenv/config";
@@ -14,7 +14,7 @@ export const register = async (req, res) => {
   const { username, email, phone_number, password } = req.body;
   try {
     if (username && email && password && phone_number) {
-      const exist = (await userData(email)) ? true : false;
+      const exist = (await userDataByEmail(email)) ? true : false;
 
       if (exist) {
         const hashedPassword = await hashPassword(password);
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
 
   try {
     if (email && password) {
-      const data = await userData(email);
+      const data = await userDataByEmail(email);
       if (data) {
         const {
           email: emailData,
@@ -118,7 +118,7 @@ export const customer = async (req, res) => {
 
   try {
     if (Number(id) === Number(idToken)) {
-      const result = await userData(emailToken);
+      const result = await userDataByEmail(emailToken);
       return res.status(200).json({
         success: true,
         message: "Data Fetch success",
@@ -145,7 +145,7 @@ export const changePicture = async (req, res) => {
   const { id } = req.params;
   const { id: idToken, email: emailToken } = req.decodedToken;
   try {
-    const data = await userData(emailToken);
+    const data = await userDataByEmail(emailToken);
     if (Number(id) === Number(idToken) && data) {
       const result = await updatePicture(url, emailToken);
       return res.status(200).json({
@@ -173,7 +173,7 @@ export const changepassword = async (req, res) => {
   const { password } = req.body;
   const { id } = req.params;
   try {
-    const data = await userData(emailToken);
+    const data = await userDataByEmail(emailToken);
 
     if (Number(id) === Number(idToken) && data) {
       const isMatched = await checkPassword(password, data.password);
@@ -220,7 +220,7 @@ export const deleteCustomer = async (req, res) => {
   const { id: idToken, email: emailToken } = req.decodedToken;
   const { id } = req.params;
   try {
-    const data = await userData(emailToken);
+    const data = await userDataByEmail(emailToken);
     if (Number(id) === Number(idToken) && data) {
       await deleteCustomerDb(idToken);
       return res.status(200).json({

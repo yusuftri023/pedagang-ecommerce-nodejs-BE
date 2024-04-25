@@ -109,6 +109,8 @@ CREATE TABLE order_detail(
     id SERIAL,
     order_date timestamp(0) not null default now(),
     total_price INT NOT NULL,
+    payment_url VARCHAR(500) NOT NULL,
+    transaction_id VARCHAR(100) NOT NULL,
     status VARCHAR(25) NOT NULL,
     customer_id BIGINT UNSIGNED NOT NULL,
     shipment_id BIGINT UNSIGNED,

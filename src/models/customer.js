@@ -1,6 +1,6 @@
 import { knexConnection, pool } from "../database/config.js";
 
-export const userData = async (email) => {
+export const userDataByEmail = async (email) => {
   const result = await knexConnection.from("customer").where("email", email);
   return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
 };

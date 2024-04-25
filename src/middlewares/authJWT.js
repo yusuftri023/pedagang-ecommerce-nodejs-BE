@@ -3,7 +3,7 @@ const { JWT_SECRET_KEY } = process.env;
 
 export const JWTsign = async (userData) => {
   // ganti masa berlaku token untuk testing
-  const token = jwt.sign(userData, JWT_SECRET_KEY, { expiresIn: 60 * 5 });
+  const token = jwt.sign(userData, JWT_SECRET_KEY, { expiresIn: 60 * 30 });
   return token;
 };
 
