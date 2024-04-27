@@ -1,8 +1,10 @@
-export const customerAddress = async (req, res) => {
-  const { id: customerId } = req.decodedToken;
+import { showPayment } from "../models/payment.js";
 
+export const customerPaymentDetail = async (req, res) => {
+  const { id: customerId } = req.decodedToken;
+  const { paymentId } = req.params;
   try {
-    const result = await findCustomerAddress(customerId);
+    const result = await showPayment(paymentId, customerId);
     if (result) {
       return res.status(200).json({
         success: true,

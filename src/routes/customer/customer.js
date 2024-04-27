@@ -12,11 +12,13 @@ import addressRouter from "./address/address.js";
 import cartRouter from "./cart/cart.js";
 import orderRouter from "./order/order.js";
 import wishlistRouter from "./wishlist/wishlist.js";
+import paymentRouter from "./payment/payment.js";
 const router = express.Router();
 router.use("/address", addressRouter);
 router.use("/cart", cartRouter);
 router.use("/order", orderRouter);
 router.use("/wishlist", wishlistRouter);
+router.use("/payment", paymentRouter);
 router.get("/profile", customer);
 router.patch(
   "/changepicture",

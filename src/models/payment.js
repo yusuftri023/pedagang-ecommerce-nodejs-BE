@@ -1,7 +1,10 @@
 import { knexConnection, pool } from "../database/config.js";
 
-export const paymentData = async (id) => {
-  const result = await knexConnection.from("payment").where("id", id);
+export const showPayment = async (paymentId, customerId) => {
+  const result = await knexConnection
+    .from("payment")
+    .where("id", paymentId)
+    .andWhere("customer_id", customerId);
   return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
 };
 
