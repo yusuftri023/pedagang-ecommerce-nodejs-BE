@@ -1,12 +1,16 @@
 import { knexConnection } from "../database/config.js";
-const trx = await knexConnection.transaction();
+
 export const findCustomerAddress = async (customerId) => {
-  const result = await knexConnection
-    .from("customer_address as ca")
-    .join("customer as c", "c.id", "ca.customer_id")
-    .join("address_detail as ad", "ad.id", "ca.customer_id")
-    .where("c.id", customerId);
-  return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  try {
+    const result = await knexConnection
+      .from("customer_address as ca")
+      .join("customer as c", "c.id", "ca.customer_id")
+      .join("address_detail as ad", "ad.id", "ca.customer_id")
+      .where("c.id", customerId);
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 export const insertCustomerAdress = async (
   customerId,
@@ -15,17 +19,22 @@ export const insertCustomerAdress = async (
   region,
   postal_code
 ) => {
-  await trx("address_detail")
-    .insert({ address_line, city, region, postal_code }, "id")
-    .then((addressId) => {
-      trx("customer_address").insert({
-        customer_id: customerId,
-        address_id: addressId[0],
-      });
-    })
-    .then(trx.commit)
-    .catch(trx.rollback);
-  return true;
+  try {
+    const trx = await knexConnection.transaction();
+    const [addressId] = await trx("address_detail").insert(
+      { address_line, city, region, postal_code },
+      "id"
+    );
+    await trx("customer_address").insert({
+      customer_id: customerId,
+      address_id: addressId,
+    });
+    await trx.commit();
+    return true;
+  } catch (error) {
+    trx.rollback();
+    throw new Error(error.message);
+  }
 };
 export const updateAddress = async (
   addressId,

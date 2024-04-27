@@ -12,24 +12,36 @@ const order_statuses = [
 ];
 
 export const orderItemsList = async (orderId, customerId) => {
-  const result = await knexConnection
-    .from("order_detail as od")
-    .join("order_item as oi", "oi.order_id", "od.id")
-    .where("order_id", orderId)
-    .andWhere("customer_id", customerId);
-  return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  try {
+    const result = await knexConnection
+      .from("order_detail as od")
+      .join("order_item as oi", "oi.order_id", "od.id")
+      .where("order_id", orderId)
+      .andWhere("customer_id", customerId);
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 export const allCustomerOrders = async (customerId, page = 1, limit = 10) => {
-  const result = await knexConnection
-    .from("order_detail")
-    .where("customer_id", customerId)
-    .offset((page - 1) * limit)
-    .limit(limit);
-  return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  try {
+    const result = await knexConnection
+      .from("order_detail")
+      .where("customer_id", customerId)
+      .offset((page - 1) * limit)
+      .limit(limit);
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 export const orderData = async (id) => {
-  const result = await knexConnection.from("order_detail").where("id", id);
-  return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  try {
+    const result = await knexConnection.from("order_detail").where("id", id);
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 export const insertOrder = async (
@@ -42,10 +54,10 @@ export const insertOrder = async (
   const { items, total_price } = orderList;
 
   try {
-    const [shipmentId] = await trx("shipment").insert(
-      { address_id: addressId, customer_id: customerId },
-      "id"
-    );
+    const [shipmentId] = await trx("shipment").insert({
+      address_id: addressId,
+      customer_id: customerId,
+    });
 
     const [paymentId] = await trx("payment").insert({
       amount: total_price,
@@ -74,11 +86,15 @@ export const insertOrder = async (
   }
 };
 export const updateStatusOrder = async (orderId, statusName) => {
-  const result = await knexConnection("order_detail")
-    .update({
-      status: statusName,
-    })
-    .where("id", orderId);
+  try {
+    const result = await knexConnection("order_detail")
+      .update({
+        status: statusName,
+      })
+      .where("id", orderId);
 
-  return result;
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
