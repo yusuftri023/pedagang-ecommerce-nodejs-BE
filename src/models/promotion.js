@@ -1,5 +1,16 @@
 import { knexConnection, pool } from "../database/config.js";
 
+export const showPromotionDetail = async (promotionId) => {
+  try {
+    const result = await knexConnection
+      .from("promotion")
+      .where("id", promotionId);
+
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 export const showPromotion = async (page = 1, limit = 10) => {
   try {
     const result = await knexConnection

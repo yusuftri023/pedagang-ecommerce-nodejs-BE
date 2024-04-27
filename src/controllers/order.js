@@ -3,7 +3,6 @@ import {
   allCustomerOrders,
   insertOrder,
   orderItemsList,
-  updateStatusOrder,
 } from "../models/order.js";
 import { midtransCreateTransaction } from "../utils/midtrans.js";
 
@@ -21,7 +20,7 @@ export const customerOrderItemsList = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "Customer cart is empty",
+        message: "Order items is empty",
         data: null,
       });
     }
@@ -85,31 +84,6 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Request is not complete ",
-        data: null,
-      });
-    }
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-      data: null,
-    });
-  }
-};
-export const changeOrderStatus = async (req, res) => {
-  const { orderId } = req.params;
-  try {
-    if (statusName) {
-      await updateStatusOrder(orderId, statusName);
-      return res.status(201).json({
-        success: true,
-        message: "Cart successfully updated",
-        data: null,
-      });
-    } else {
-      return res.status(400).json({
-        success: false,
-        message: "Request is not complete",
         data: null,
       });
     }

@@ -2,10 +2,10 @@ import { knexConnection, pool } from "../database/config.js";
 
 export const showDetailProduct = async (productId) => {
   try {
-    const [result] = await knexConnection
+    const result = await knexConnection
       .from("product as p")
       .join("product_config as pc", "pc.product_id", "p.id")
-      .where("p.id", productId);
+      .where("pc.product_id", productId);
 
     return result;
   } catch (error) {
@@ -39,9 +39,9 @@ export const insertProduct = async (
     throw new Error(error.message);
   }
 };
-export const deleteProduct = async (id) => {
+export const deleteProductEntry = async (productId) => {
   try {
-    await knexConnection("product").delete().where("id", id);
+    await knexConnection("product").delete().where("id", productId);
     return true;
   } catch (error) {
     throw new Error(error.message);

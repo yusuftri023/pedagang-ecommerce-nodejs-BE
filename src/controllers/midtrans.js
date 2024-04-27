@@ -3,6 +3,8 @@ import { apiClient } from "../utils/midtrans.js";
 
 export const midtransTransactionNotification = async (req, res) => {
   try {
+    const { transaction_id } = req.body;
+
     const statusResponse = await apiClient.transaction.notification(
       JSON.stringify(req.body)
     );
@@ -18,7 +20,7 @@ export const midtransTransactionNotification = async (req, res) => {
 
     if (transactionStatus == "capture") {
       if (fraudStatus == "accept") {
-        await updateStatusOrder(orderId, "Pesanan Diproses");
+        await updateStatusOrder(orderId, transaction_id, "Pesanan Diproses");
 
         return res.status(200).json({
           status_code: 200,
@@ -27,7 +29,7 @@ export const midtransTransactionNotification = async (req, res) => {
         });
       }
     } else if (transactionStatus == "settlement") {
-      await updateStatusOrder(orderId, "Pesanan Selesai");
+      await updateStatusOrder(orderId, transaction_id, "Pesanan Selesai");
 
       return res.status(200).json({
         status_code: 200,
@@ -39,7 +41,7 @@ export const midtransTransactionNotification = async (req, res) => {
       transactionStatus == "deny" ||
       transactionStatus == "expire"
     ) {
-      await updateStatusOrder(orderId, "Pesanan Dibatalkan");
+      await updateStatusOrder(orderId, transaction_id, "Pesanan Dibatalkan");
 
       return res.status(200).json({
         status_code: 200,
@@ -47,7 +49,7 @@ export const midtransTransactionNotification = async (req, res) => {
         fraud_status: fraudStatus,
       });
     } else if (transactionStatus == "pending") {
-      await updateStatusOrder(orderId, "Menunggu Pembayaran");
+      await updateStatusOrder(orderId, transaction_id, "Menunggu Pembayaran");
 
       return res.status(200).json({
         status_code: 200,

@@ -1,5 +1,16 @@
 import { knexConnection, pool } from "../database/config.js";
 
+export const showVariationDetail = async (variationId) => {
+  try {
+    const [result] = await knexConnection
+      .from("variation")
+      .where("id", variationId);
+
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 export const showVariationInCategory = async (categoryId) => {
   try {
     const result = await knexConnection
@@ -16,10 +27,10 @@ export const showVariationInCategory = async (categoryId) => {
 
 export const insertVariation = async (name, description = "-") => {
   try {
-    const [result] = await knexConnection("category").insert([
+    const [categoryId] = await knexConnection("category").insert([
       { name, description },
     ]);
-    return result;
+    return categoryId;
   } catch (error) {
     throw new Error(error.message);
   }

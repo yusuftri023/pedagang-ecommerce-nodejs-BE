@@ -35,14 +35,6 @@ export const allCustomerOrders = async (customerId, page = 1, limit = 10) => {
     throw new Error(error.message);
   }
 };
-export const orderData = async (id) => {
-  try {
-    const result = await knexConnection.from("order_detail").where("id", id);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
 
 export const insertOrder = async (
   orderList,
@@ -70,7 +62,7 @@ export const insertOrder = async (
       shipment_id: shipmentId,
       payment_id: paymentId,
       total_price: total_price,
-      status: "Menunggu Pembayaran",
+      status: "Menunggu pembuatan transaksi",
     });
 
     const orderItems = items.map(({ product_id, quantity, price }) => {
@@ -85,11 +77,12 @@ export const insertOrder = async (
     throw new Error(error.message);
   }
 };
-export const updateStatusOrder = async (orderId, statusName) => {
+export const updateStatusOrder = async (orderId, transactionId, statusName) => {
   try {
     const result = await knexConnection("order_detail")
       .update({
         status: statusName,
+        transaction_id: transactionId,
       })
       .where("id", orderId);
 
