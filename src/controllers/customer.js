@@ -111,7 +111,21 @@ export const login = async (req, res) => {
     });
   }
 };
-
+export const logout = async (req, res) => {
+  return res
+    .clearCookie("authorization", {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+    })
+    .status(200)
+    .json({
+      success: true,
+      message: "Logout Success",
+      data: null,
+    });
+};
 export const customer = async (req, res) => {
   const { id: idToken, email: emailToken } = req.decodedToken;
 

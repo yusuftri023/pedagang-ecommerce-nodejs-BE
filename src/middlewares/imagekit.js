@@ -22,13 +22,13 @@ export const imagekitUpload = async (req, res, next) => {
     console.time("uploading to imagekit");
     await imagekit.createFolder({
       folderName: `${formattedTime}`,
-      parentFolderPath: "/HMS-Nodejs/profile-picture",
+      parentFolderPath: "/Ecommerce-Pedagang/profile-picture",
     });
 
     const uploadImage = await imagekit.upload({
       fileName: `${currentTime}.jpeg`,
       file: stringFile,
-      folder: `/HMS-Nodejs/profile-picture/${formattedTime}`,
+      folder: `/Ecommerce-Pedagang/profile-picture/${formattedTime}`,
     });
     console.timeEnd("uploading to imagekit");
     req.uploadImage = uploadImage;

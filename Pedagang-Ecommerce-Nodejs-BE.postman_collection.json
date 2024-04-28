@@ -8,844 +8,871 @@
 	},
 	"item": [
 		{
-			"name": "Login Auth",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"yusufhaha@gmail.com\", \r\n    \"password\": \"12341234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"yusufhaha@gmail.com\", \r\n    \"password\": \"12341234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/auth/login",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Register new Customer",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\" : \"yusufhaha\", \r\n    \"email\": \"yusufhaha@gmail.com\", \r\n    \"phone_number\" : \"0812228232\", \r\n    \"password\": \"12341234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Register new Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"yusufhaha\", \r\n    \"email\": \"yusufhaha@gmail.com\", \r\n    \"phone_number\" : \"0812228232\", \r\n    \"password\": \"12341234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/auth/register",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"auth",
-						"register"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "create new order",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Order",
+			"item": [
+				{
+					"name": "create new order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get list of items in an order",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "get list of items in an order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get list of customer order",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "get list of customer order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "get payment details of an order",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Payment",
+			"item": [
+				{
+					"name": "get payment details of an order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "get customer cart list",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Customer",
+			"item": [
+				{
+					"name": "get Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add new item to cart",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"product_id\":8,\r\n    \"quantity\":1\r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "update Customer profile picture",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/yusuf/Downloads/small-dog-owners-1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/2/changepicture",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"2",
+								"changepicture"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/cart",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"cart"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update product quantity in cart",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"cart_id\":11,\r\n    \"quantity\":2\r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "update Customer password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"password\": \"12341234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/2/changepassword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"2",
+								"changepassword"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/cart",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"cart"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete item in cart",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/cart/11",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"cart",
-						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get product categories",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/customers/order",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"order"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "add new product category",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"test\",\r\n    \"description\":\"testing input category\"\r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Address",
+			"item": [
+				{
+					"name": "get Customer address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/category",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"category"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get promotion",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/promotion",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"promotion"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add new promotion",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"test\",\r\n    \"description\":\"testing input promotion\",\r\n    \"categories\":[2,3],\r\n    \"discount_rate\":10,\r\n    \"start_date\": \"2024-04-28\",\r\n    \"end_date\": \"2024-04-30\"\r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "add Customer address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address_line\":\"jl. perintis\",\r\n        \"city\":\"Samarinda\",\r\n        \"region\":\"Kalimantan Timur\",\r\n        \"postal_code\":\"29923\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/address",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"address"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/promotion",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"promotion"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete promotion",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/promotion/3",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"promotion",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get customer wishlist",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/wishlist",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"wishlist"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add new wishlist item",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"product_id\": 8\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "update Customer selected address",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"password\": \"12341234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/2/changepassword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"2",
+								"changepassword"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/wishlist",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"wishlist"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete wishlist item",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/wishlist/2",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"wishlist",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get variation",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/categories/2/variation",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"categories",
-						"2",
-						"variation"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add new variation",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"test\",\r\n    \"category_id\":1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "delete Customer address",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/customers/variation",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"variation"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "delete variation",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/variation/9",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"variation",
-						"9"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get Customer",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update Customer profile picture",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "image",
-							"type": "file",
-							"src": "/C:/Users/yusuf/Downloads/small-dog-owners-1.jpg"
+			"name": "Cart",
+			"item": [
+				{
+					"name": "get customer cart list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/2/changepicture",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"2",
-						"changepicture"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update Customer password",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"password\": \"12341234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "add new item to cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\":8,\r\n    \"quantity\":1\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/cart",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"cart"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/2/changepassword",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"2",
-						"changepassword"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete Customer",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "update product quantity in cart",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cart_id\":11,\r\n    \"quantity\":2\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/cart",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"cart"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get Customer address",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/customers/1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add Customer address",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"address_line\":\"jl. perintis\",\r\n        \"city\":\"Samarinda\",\r\n        \"region\":\"Kalimantan Timur\",\r\n        \"postal_code\":\"29923\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "delete item in cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/cart/11",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"cart",
+								"11"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/customers/address",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"address"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "update Customer selected address",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"password\": \"12341234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Product",
+			"item": [
+				{
+					"name": "get product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"title\":\"HP\", \r\n    \"price\":10000000, \r\n    \"stock\":29,\r\n    \"category_id\":1, \r\n    \"configs\":[]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/product/8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"product",
+								"8"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/2/changepassword",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"2",
-						"changepassword"
-					]
+				{
+					"name": "add new product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"title\":\"HP\", \r\n    \"price\":10000000, \r\n    \"stock\":29,\r\n    \"category_id\":1, \r\n    \"configs\":[]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/product",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "update Customer selected address Copy",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"password\": \"12341234\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Promotion",
+			"item": [
+				{
+					"name": "get promotion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/promotion",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"promotion"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/2/changepassword",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"2",
-						"changepassword"
-					]
+				{
+					"name": "add new promotion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"description\":\"testing input promotion\",\r\n    \"categories\":[2,3],\r\n    \"discount_rate\":10,\r\n    \"start_date\": \"2024-04-28\",\r\n    \"end_date\": \"2024-04-30\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/promotion",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"promotion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete promotion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/promotion/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"promotion",
+								"3"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "delete Customer address",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Wishlist",
+			"item": [
+				{
+					"name": "get customer wishlist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/wishlist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"wishlist"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"1"
-					]
+				{
+					"name": "add new wishlist item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/wishlist",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"wishlist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete wishlist item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/wishlist/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"wishlist",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "get product",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": " {\r\n    \"title\":\"HP\", \r\n    \"price\":10000000, \r\n    \"stock\":29,\r\n    \"category_id\":1, \r\n    \"configs\":[]\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Product",
+			"item": [
+				{
+					"name": "get product categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_list\" : {\r\n        \"items\":[\r\n            {\r\n                \"product_id\":7,\r\n                \"name\": \"Motor\",\r\n                \"quantity\":1, \r\n                \"price\":100000000}],\r\n            \"total_price\":100000000}, \r\n    \"address_id\": 1, \r\n    \"payment_method_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"order"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/product/8",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"product",
-						"8"
-					]
+				{
+					"name": "add new product category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"description\":\"testing input category\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"category"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "add new product",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": " {\r\n    \"title\":\"HP\", \r\n    \"price\":10000000, \r\n    \"stock\":29,\r\n    \"category_id\":1, \r\n    \"configs\":[]\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Variation",
+			"item": [
+				{
+					"name": "get variation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/categories/2/variation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"categories",
+								"2",
+								"variation"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/product",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"product"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete product",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "add new variation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test\",\r\n    \"category_id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers/variation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"variation"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/customers/1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"customers",
-						"1"
-					]
+				{
+					"name": "delete variation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/customers/variation/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers",
+								"variation",
+								"9"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
 			"name": "test connection",
