@@ -6,7 +6,7 @@ export const showPromotionDetail = async (promotionId) => {
       .from("promotion")
       .where("id", promotionId);
 
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -18,7 +18,7 @@ export const showPromotion = async (page = 1, limit = 10) => {
       .offset((page - 1) * limit)
       .limit(limit);
 
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
   } catch (error) {
     throw new Error(error.message);
   }

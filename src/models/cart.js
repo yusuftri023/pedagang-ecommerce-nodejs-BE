@@ -1,4 +1,4 @@
-import { knexConnection, pool } from "../database/config.js";
+import { knexConnection } from "../database/config.js";
 
 export const cartData = async (customerId, page = 1, limit = 10) => {
   try {
@@ -7,7 +7,7 @@ export const cartData = async (customerId, page = 1, limit = 10) => {
       .where("customer_id", customerId)
       .offset((page - 1) * limit)
       .limit(limit);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
   } catch (error) {
     throw new Error(error.message);
   }

@@ -28,9 +28,12 @@ export const insertProduct = async (
     const [productId] = await trx("product").insert([
       { title, description, price, stock, image, category_id: categoryId },
     ]);
-    const product_config = configs.map((config) => {
-      return { product_id: productId, variation_option_id: config };
-    });
+    const product_config =
+      configs.length > 0
+        ? configs.map((config) => {
+            return { product_id: productId, variation_option_id: config };
+          })
+        : { product_id: productId, variation_option_id: null };
     await trx("product_config").insert(product_config);
     await trx.commit();
     return true;

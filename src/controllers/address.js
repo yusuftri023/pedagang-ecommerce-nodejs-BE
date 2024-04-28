@@ -11,7 +11,7 @@ export const customerAddress = async (req, res) => {
 
   try {
     const result = await findCustomerAddress(customerId);
-    if (result) {
+    if (result.length > 0) {
       return res.status(200).json({
         success: true,
         message: "Data Fetch success",
@@ -123,8 +123,10 @@ export const deleteAddress = async (req, res) => {
   const { id: customerId } = req.decodedToken;
   const { addressId } = req.params;
   try {
-    if (data) {
-      await deleteAddressEntry(addressId);
+    const data = await findCustomerAddress(customerId);
+
+    if (data.length > 0) {
+      await deleteAddressEntry(addressId, customerId);
       return res.status(200).json({
         success: true,
         message: "Address entry deleted",

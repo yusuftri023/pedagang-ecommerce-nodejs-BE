@@ -9,7 +9,7 @@ export const detailProduct = async (req, res) => {
 
   try {
     const result = await showDetailProduct(productId);
-    if (result) {
+    if (result.length > 0) {
       return res.status(200).json({
         success: true,
         message: "Data Fetch success",
@@ -32,8 +32,15 @@ export const detailProduct = async (req, res) => {
 };
 
 export const addProduct = async (req, res) => {
-  const { title, price, stock, categoryId, configs, image, description } =
-    req.body;
+  const {
+    title,
+    price,
+    stock,
+    category_id: categoryId,
+    configs,
+    image,
+    description,
+  } = req.body;
   try {
     if (title && price && stock && categoryId && configs) {
       await insertProduct(
@@ -69,18 +76,18 @@ export const addProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const { productId } = req.params;
   try {
-    const data = await showDetailProduct(productId);
-    if (data) {
+    const result = await showDetailProduct(productId);
+    if (result.length > 0) {
       await deleteProductEntry(productId);
       return res.status(200).json({
         success: true,
-        message: "Address entry deleted",
+        message: "Product entry deleted",
         data: null,
       });
     } else {
       return res.status(404).json({
         success: false,
-        message: "Address entry does not exist",
+        message: "Product entry does not exist",
         data: null,
       });
     }

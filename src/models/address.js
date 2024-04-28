@@ -5,9 +5,11 @@ export const findCustomerAddress = async (customerId) => {
     const result = await knexConnection
       .from("customer_address as ca")
       .join("customer as c", "c.id", "ca.customer_id")
-      .join("address_detail as ad", "ad.id", "ca.customer_id")
-      .where("c.id", customerId);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+      .join("address_detail as ad", "ad.id", "ca.address_id")
+      .select("ca.*", "ad.*")
+      .where("ca.customer_id", customerId);
+
+    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -17,17 +19,21 @@ export const insertCustomerAdress = async (
   address_line,
   city,
   region,
-  postal_code
+  postal_code,
+  selected = false
 ) => {
+  const trx = await knexConnection.transaction();
   try {
-    const trx = await knexConnection.transaction();
-    const [addressId] = await trx("address_detail").insert(
-      { address_line, city, region, postal_code },
-      "id"
-    );
+    const [addressId] = await trx("address_detail").insert({
+      address_line,
+      city,
+      region,
+      postal_code,
+    });
     await trx("customer_address").insert({
       customer_id: customerId,
       address_id: addressId,
+      selected,
     });
     await trx.commit();
     return true;
@@ -74,10 +80,13 @@ export const selectAddress = async (addressId, customerId) => {
     throw new Error(error.message);
   }
 };
-export const deleteAddressEntry = async (id) => {
+export const deleteAddressEntry = async (addressId, customerId) => {
   try {
-    await knexConnection("customer_address").delete().where("address_id", id);
-    await knexConnection("address_detail").delete().where("id", id);
+    await knexConnection("customer_address")
+      .delete()
+      .where("address_id", addressId)
+      .andWhere("customer_id", customerId);
+    await knexConnection("address_detail").delete().where("id", addressId);
 
     return true;
   } catch (error) {

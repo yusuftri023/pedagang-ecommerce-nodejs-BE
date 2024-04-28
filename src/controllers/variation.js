@@ -33,9 +33,9 @@ export const allVariationInCategory = async (req, res) => {
 
 export const addVariation = async (req, res) => {
   try {
-    const { variationName, description } = req.body;
-    if (variationName) {
-      await insertVariation(variationName, description);
+    const { name: variationName, category_id: categoryId } = req.body;
+    if (variationName && categoryId) {
+      await insertVariation(variationName, categoryId);
       return res.status(201).json({
         success: true,
         message: "Variation successfully created",
@@ -60,7 +60,8 @@ export const addVariation = async (req, res) => {
 export const deleteVariation = async (req, res) => {
   const { variationId } = req.params;
   try {
-    const data = showVariationDetail(variationId);
+    const data = await showVariationDetail(variationId);
+
     if (data) {
       await deleteVariationEntry(variationId);
       return res.status(200).json({

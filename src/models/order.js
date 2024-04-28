@@ -30,7 +30,7 @@ export const allCustomerOrders = async (customerId, page = 1, limit = 10) => {
       .where("customer_id", customerId)
       .offset((page - 1) * limit)
       .limit(limit);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : result;
   } catch (error) {
     throw new Error(error.message);
   }

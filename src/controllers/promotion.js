@@ -36,13 +36,19 @@ export const addPromotion = async (req, res) => {
   const {
     categories,
     discount_rate,
-    promotionName,
-    startDate,
-    endDate,
+    name: promotionName,
+    start_date: startDate,
+    end_date: endDate,
     description,
   } = req.body;
   try {
-    if (categories && discount_rate && promotionName && startDate && endDate) {
+    if (
+      categories.length > 0 &&
+      discount_rate &&
+      promotionName &&
+      startDate &&
+      endDate
+    ) {
       await insertPromotion(
         categories,
         discount_rate,
@@ -75,8 +81,16 @@ export const addPromotion = async (req, res) => {
 export const deletePromotion = async (req, res) => {
   const { promotionId } = req.params;
   try {
-    const data = await showPromotionDetail(promotionId);
-    if (data) {
+    const promotionEntry = await showPromotionDetail(promotionId);
+
+    const promotionItemsExist =
+      promotionEntry.length > 0
+        ? promotionEntry.some(
+            ({ id: dbPromotionId }) => Number(promotionId) === dbPromotionId
+          )
+        : false;
+
+    if (promotionItemsExist) {
       await deletePromotionEntry(promotionId);
       return res.status(200).json({
         success: true,

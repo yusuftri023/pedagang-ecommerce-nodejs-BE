@@ -14,7 +14,7 @@ export const allCategory = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "Customer address does not exist",
+        message: "Product categories does not exist",
         data: null,
       });
     }
@@ -28,19 +28,35 @@ export const allCategory = async (req, res) => {
 };
 
 export const addCategory = async (req, res) => {
-  const { categoryName, description } = req.body;
+  const { name: categoryName, description } = req.body;
   try {
-    if (categoryName) {
-      await insertCategory(categoryName, description);
-      return res.status(201).json({
-        success: true,
-        message: "Address successfully created",
-        data: null,
-      });
+    const categories = await showCategory(1, 100);
+
+    const categoryExist =
+      categories.length > 0
+        ? categories.some(
+            ({ name: dbCategoryName }) => categoryName === dbCategoryName
+          )
+        : false;
+    if (!categoryExist) {
+      if (categoryName) {
+        await insertCategory(categoryName, description);
+        return res.status(201).json({
+          success: true,
+          message: "Category successfully created",
+          data: null,
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Request is not complete ",
+          data: null,
+        });
+      }
     } else {
       return res.status(400).json({
         success: false,
-        message: "Request is not complete ",
+        message: "Product category already exist ",
         data: null,
       });
     }

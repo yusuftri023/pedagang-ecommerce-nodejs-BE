@@ -19,18 +19,18 @@ export const showVariationInCategory = async (categoryId) => {
       .join("variation_option as vo", "vo.variation_id", "v.id")
       .where("c.id", categoryId);
 
-    return result;
+    return result.length > 0 ? result : false;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export const insertVariation = async (name, description = "-") => {
+export const insertVariation = async (name, category_id) => {
   try {
-    const [categoryId] = await knexConnection("category").insert([
-      { name, description },
+    const [variationId] = await knexConnection("variation").insert([
+      { name, category_id },
     ]);
-    return categoryId;
+    return variationId;
   } catch (error) {
     throw new Error(error.message);
   }

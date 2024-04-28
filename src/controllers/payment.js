@@ -14,7 +14,7 @@ export const customerPaymentDetail = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "Customer address does not exist",
+        message: "Customer payment details does not exist",
         data: null,
       });
     }

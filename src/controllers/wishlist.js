@@ -12,11 +12,19 @@ export const customerWishlist = async (req, res) => {
 
   try {
     const result = await wishlistItems(customerId, page, limit);
-    return res.status(200).json({
-      success: true,
-      message: "Data Fetch success",
-      data: result,
-    });
+    if (result.length > 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Data Fetch success",
+        data: result,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "wishlist is empty",
+        data: null,
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -27,7 +35,7 @@ export const customerWishlist = async (req, res) => {
 };
 export const addWishlist = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { productId } = req.params;
+  const { product_id: productId } = req.body;
 
   try {
     const isMatch = await checkWishlist(customerId, productId);
@@ -37,14 +45,14 @@ export const addWishlist = async (req, res) => {
         message: "data already exist",
         data: null,
       });
+    } else {
+      await insertWishlist(customerId, productId);
+      return res.status(200).json({
+        success: true,
+        message: "Item added to the wishlist",
+        data: null,
+      });
     }
-
-    const result = await insertWishlist(customerId, productId);
-    return res.status(200).json({
-      success: true,
-      message: "Data Fetch success",
-      data: result,
-    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -57,12 +65,12 @@ export const deleteWishlist = async (req, res) => {
   const { id: customerId } = req.decodedToken;
   const { wishlistId } = req.params;
   try {
-    const data = await wishlistData(customerId, wishlistId);
-    if (data) {
+    const isExist = await wishlistData(customerId, wishlistId);
+    if (isExist) {
       await deleteWishlistEntry(wishlistId);
       return res.status(200).json({
         success: true,
-        message: "Account deleted",
+        message: "Wishlist Item deleted",
         data: null,
       });
     } else {

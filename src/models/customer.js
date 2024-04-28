@@ -47,13 +47,13 @@ export const updatePassword = async (password, email) => {
 };
 export const updatePicture = async (picture, email) => {
   try {
-    const result = await knexConnection("customer")
+    await knexConnection("customer")
       .update({
         picture,
       })
       .where("email", email);
 
-    return result;
+    return true;
   } catch (error) {
     throw new Error(error.message);
   }

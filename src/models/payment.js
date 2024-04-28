@@ -6,7 +6,7 @@ export const showPayment = async (paymentId, customerId) => {
       .from("payment")
       .where("id", paymentId)
       .andWhere("customer_id", customerId);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : false;
   } catch (error) {
     throw new Error(error.message);
   }

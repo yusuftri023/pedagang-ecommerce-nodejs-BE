@@ -113,24 +113,15 @@ export const login = async (req, res) => {
 };
 
 export const customer = async (req, res) => {
-  const { id } = req.params;
   const { id: idToken, email: emailToken } = req.decodedToken;
 
   try {
-    if (Number(id) === Number(idToken)) {
-      const result = await userDataByEmail(emailToken);
-      return res.status(200).json({
-        success: true,
-        message: "Data Fetch success",
-        data: result,
-      });
-    } else {
-      return res.status(403).json({
-        success: false,
-        message: "Can't access this data",
-        data: null,
-      });
-    }
+    const result = await userDataByEmail(emailToken);
+    return res.status(200).json({
+      success: true,
+      message: "Data Fetch success",
+      data: result,
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -142,16 +133,15 @@ export const customer = async (req, res) => {
 
 export const changePicture = async (req, res) => {
   const { url } = req.uploadImage;
-  const { id } = req.params;
   const { id: idToken, email: emailToken } = req.decodedToken;
   try {
     const data = await userDataByEmail(emailToken);
-    if (Number(id) === Number(idToken) && data) {
-      const result = await updatePicture(url, emailToken);
+    if (data) {
+      await updatePicture(url, emailToken);
       return res.status(200).json({
         success: true,
-        message: "Data updated successfully",
-        data: result,
+        message: "Profile picture updated successfully",
+        data: null,
       });
     } else {
       return res.status(404).json({
@@ -171,19 +161,19 @@ export const changePicture = async (req, res) => {
 export const changepassword = async (req, res) => {
   const { id: idToken, email: emailToken } = req.decodedToken;
   const { password } = req.body;
-  const { id } = req.params;
+
   try {
     const data = await userDataByEmail(emailToken);
 
-    if (Number(id) === Number(idToken) && data) {
+    if (data) {
       const isMatched = await checkPassword(password, data.password);
       if (!isMatched) {
         const hashedPassword = await hashPassword(password);
-        const result = await updatePassword(hashedPassword, data.email);
+        await updatePassword(hashedPassword, data.email);
         return res.status(201).json({
           success: true,
           message: "Password updated successfully",
-          data: result,
+          data: null,
         });
       } else {
         return res.status(400).json({
@@ -193,19 +183,11 @@ export const changepassword = async (req, res) => {
         });
       }
     } else {
-      if (Number(id) !== Number(idToken)) {
-        return res.status(400).json({
-          success: false,
-          message: "Bad request id",
-          data: null,
-        });
-      } else {
-        return res.status(404).json({
-          success: false,
-          message: "Customer does not exist",
-          data: null,
-        });
-      }
+      return res.status(404).json({
+        success: false,
+        message: "Customer does not exist",
+        data: null,
+      });
     }
   } catch (error) {
     return res.status(500).json({
@@ -218,10 +200,10 @@ export const changepassword = async (req, res) => {
 
 export const deleteCustomer = async (req, res) => {
   const { id: idToken, email: emailToken } = req.decodedToken;
-  const { id } = req.params;
+
   try {
     const data = await userDataByEmail(emailToken);
-    if (Number(id) === Number(idToken) && data) {
+    if (data) {
       await deleteCustomerDb(idToken);
       return res.status(200).json({
         success: true,

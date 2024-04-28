@@ -6,8 +6,8 @@ import {
 } from "../../../controllers/wishlist.js";
 
 const router = express.Router();
-router.get("/wishlist", customerWishlist);
-router.post("/wishlist/:productId", addWishlist);
-router.delete("/wishlist/:wishlistId/delete", deleteWishlist);
+router.get("/", customerWishlist);
+router.post("/", addWishlist);
+router.delete("/:wishlistId", deleteWishlist);
 
 export default router;

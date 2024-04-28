@@ -9,9 +9,9 @@ import {
 
 const router = express.Router();
 router.get("/", customerAddress);
-router.post("/:productId", addCustomerAddress);
+router.post("/", addCustomerAddress);
 router.patch("/:addressId", changeAddressDetails);
-router.patch("/:addressId", changeSelectedAddress);
-router.delete("/:addressId/delete", deleteAddress);
+router.patch("/:addressId/select", changeSelectedAddress);
+router.delete("/:addressId", deleteAddress);
 
 export default router;
