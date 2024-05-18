@@ -1,4 +1,4 @@
-import { knexConnection, pool } from "../database/config.js";
+import { knexConnection } from "../database/config.js";
 
 export const userDataByEmail = async (email) => {
   try {
@@ -26,6 +26,31 @@ export const insertCustomer = async (
         picture: defaultPicture,
       },
     ]);
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const upsertGoogle = async (
+  email,
+  verified_email,
+  name,
+  picture,
+  google_id
+) => {
+  try {
+    const [result] = await knexConnection("customer")
+      .insert({
+        email,
+        verified: verified_email,
+        username: name,
+        picture,
+        google_id,
+        password: "defaultnopassword",
+        phone_number: "-",
+      })
+      .onConflict("email")
+      .merge({ google_id, verified: verified_email });
     return result;
   } catch (error) {
     throw new Error(error.message);

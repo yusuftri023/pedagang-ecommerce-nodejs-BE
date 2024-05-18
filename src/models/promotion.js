@@ -1,4 +1,4 @@
-import { knexConnection, pool } from "../database/config.js";
+import { knexConnection } from "../database/config.js";
 
 export const showPromotionDetail = async (promotionId) => {
   try {

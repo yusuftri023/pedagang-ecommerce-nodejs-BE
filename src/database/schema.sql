@@ -8,6 +8,11 @@ CREATE TABLE customer(
     last_password_update timestamp(0) not null default now(),
     PRIMARY KEY(id)
 );
+CREATE TABLE session(
+    session_id VARCHAR(250),
+    customer_id BIGINT UNSIGNED UNIQUE NOT NULL,
+    CONSTRAINT fk_customer_session Foreign Key (customer_id) REFERENCES customer(id)
+);
 CREATE TABLE address_detail(
     id SERIAL,
     address_line VARCHAR(255),

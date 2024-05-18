@@ -20,6 +20,7 @@
     "nodemon": "latest"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "bcrypt": "latest",
     "cookie-parser": "^1.4.6",
     "cors": "latest",
@@ -27,10 +28,12 @@
     "express": "latest",
     "imagekit": "latest",
     "jsonwebtoken": "latest",
+    "jwt-decode": "^4.0.0",
     "knex": "^3.1.0",
     "midtrans-client": "^1.3.1",
     "multer": "^1.4.5-lts.1",
     "mysql2": "latest",
-    "sharp": "^0.33.3"
+    "sharp": "^0.33.3",
+    "uuid": "^9.0.1"
   }
 }

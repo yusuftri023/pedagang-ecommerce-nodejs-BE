@@ -1,4 +1,4 @@
-import { knexConnection, pool } from "../database/config.js";
+import { knexConnection } from "../database/config.js";
 
 export const checkWishlist = async (customerId, productId) => {
   try {
@@ -44,7 +44,6 @@ export const insertWishlist = async (customer_id, product_id) => {
         product_id,
       },
     ]);
-    console.log(result);
     return result;
   } catch (error) {
     throw new Error(error.message);

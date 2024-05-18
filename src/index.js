@@ -6,6 +6,7 @@ import "dotenv/config";
 import router from "./routes/router.js";
 import logger from "./middlewares/logger.js";
 import cookieParser from "cookie-parser";
+import { auth } from "./middlewares/authJWT.js";
 const app = express();
 const { SERVER_PORT, SIGNED_COOKIE_SECRET } = process.env;
 const options = {
@@ -15,12 +16,18 @@ const options = {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors({ origin: "https://127.0.0.1:8080" }));
+app.use(
+  cors({
+    origin: ["https://127.0.0.1:5173", "https://127.0.0.1:8080"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
 app.use(cookieParser(SIGNED_COOKIE_SECRET));
 app.use(logger);
 app.use("/", router);
 app.get("/", (req, res) => {
-  res.json({
+  return res.json({
     status: "success",
     message: "Welcome to HMS-Individual-API-Project",
   });

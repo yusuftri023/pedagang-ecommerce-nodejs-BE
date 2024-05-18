@@ -1,13 +1,28 @@
-import { JWTsign } from "../middlewares/authJWT.js";
+import { v4 as uuidv4 } from "uuid";
+import {
+  createAccessToken,
+  createRefreshToken,
+} from "../middlewares/authJWT.js";
 import {
   deleteCustomerDb,
   insertCustomer,
   updatePassword,
   updatePicture,
+  upsertGoogle,
   userDataByEmail,
 } from "../models/customer.js";
-import { checkPassword, hashPassword } from "../utils/authBcrypt.js";
+import {
+  checkBcrypt,
+  hashPassword,
+  hashRefreshToken,
+} from "../utils/authBcrypt.js";
 import "dotenv/config";
+import { createSession } from "../models/session.js";
+import {
+  getGoogleOAuthTokens,
+  getGoogleOAuthURL,
+  getGoogleUser,
+} from "../utils/Oauth.js";
 const { SIGNED_COOKIE_SECRET } = process.env;
 
 export const register = async (req, res) => {
@@ -59,27 +74,58 @@ export const login = async (req, res) => {
           id: idData,
           password: passwordData,
         } = data;
-        const isMatch = await checkPassword(password, passwordData);
+        const isMatch = await checkBcrypt(password, passwordData);
         if (isMatch) {
           const tokenData = {
             id: idData,
             username: usernameData,
             email: emailData,
           };
-          const token = await JWTsign(tokenData);
+
+          const access_token = await createAccessToken(tokenData);
+          const uuid = uuidv4();
+          const refresh_token = await createRefreshToken({
+            session_id: uuid,
+            id: idData,
+            username: usernameData,
+            email: emailData,
+          });
+          const hashedRefreshToken = await hashRefreshToken(uuid);
+          await createSession(idData, hashedRefreshToken, "Web");
           return res
-            .cookie("authorization", token, {
+            .cookie("access_token", access_token, {
               signed: true,
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
+              domain: "127.0.0.1",
+              sameSite: "none",
+              path: "/",
+            })
+            .cookie("refresh_token", refresh_token, {
+              signed: true,
+              secure: true,
+              httpOnly: true,
+              secret: SIGNED_COOKIE_SECRET,
+              domain: "127.0.0.1",
+              sameSite: "none",
+              path: "/",
+            })
+            .cookie("login_type", "Web", {
+              signed: true,
+              secure: true,
+              httpOnly: true,
+              secret: SIGNED_COOKIE_SECRET,
+              domain: "127.0.0.1",
+              sameSite: "none",
+              path: "/",
             })
             .status(201)
             .json({
               success: true,
               message: "Login Success",
               data: {
-                token,
+                access_token,
               },
             });
         } else {
@@ -144,7 +190,59 @@ export const customer = async (req, res) => {
     });
   }
 };
+export const generateGoogleLoginURL = async (req, res) => {
+  const code = await getGoogleOAuthURL();
+  return res.json({ url: code });
+};
+export const googleLogin = async (req, res) => {
+  const { code } = req.query;
+  try {
+    const { access_token, id_token, refresh_token } =
+      await getGoogleOAuthTokens({
+        code,
+      });
+    const { id, email, verified_email, name, picture } = await getGoogleUser({
+      id_token,
+      access_token,
+    });
 
+    await upsertGoogle(email, verified_email, name, picture, id);
+    const customerData = await userDataByEmail(email);
+    const hashedRefreshToken = await hashRefreshToken(refresh_token);
+    await createSession(customerData.id, hashedRefreshToken, "Google Oauth");
+
+    res.cookie("access_token", access_token, {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+      domain: "127.0.0.1",
+      sameSite: "none",
+      path: "/",
+    });
+    res.cookie("refresh_token", refresh_token, {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+      domain: "127.0.0.1",
+      sameSite: "none",
+      path: "/",
+    });
+    res.cookie("login_type", "Google Oauth", {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+      domain: "127.0.0.1",
+      sameSite: "none",
+      path: "/",
+    });
+    return res.redirect("https://127.0.0.1:5173/");
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
 export const changePicture = async (req, res) => {
   const { url } = req.uploadImage;
   const { id: idToken, email: emailToken } = req.decodedToken;
@@ -180,7 +278,7 @@ export const changepassword = async (req, res) => {
     const data = await userDataByEmail(emailToken);
 
     if (data) {
-      const isMatched = await checkPassword(password, data.password);
+      const isMatched = await checkBcrypt(password, data.password);
       if (!isMatched) {
         const hashedPassword = await hashPassword(password);
         await updatePassword(hashedPassword, data.email);
