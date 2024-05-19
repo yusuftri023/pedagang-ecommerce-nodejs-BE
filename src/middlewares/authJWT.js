@@ -11,16 +11,17 @@ const {
   JWT_ACCESS_TOKEN_SECRET,
   JWT_REFRESH_TOKEN_SECRET,
   SIGNED_COOKIE_SECRET,
+  FRONT_END_DOMAIN,
 } = process.env;
 export const createAccessToken = async (userData) => {
   const token = jwt.sign(userData, JWT_ACCESS_TOKEN_SECRET, {
-    expiresIn: 15,
+    expiresIn: 3600,
   });
   return token;
 };
 export const createRefreshToken = async (uuid) => {
   const token = jwt.sign(uuid, JWT_REFRESH_TOKEN_SECRET, {
-    expiresIn: 30,
+    expiresIn: "7d",
   });
 
   return token;
@@ -28,9 +29,7 @@ export const createRefreshToken = async (uuid) => {
 
 export const auth = async (req, res, next) => {
   const { access_token, refresh_token, login_type } = req.signedCookies;
-  console.log(access_token);
-  console.log(refresh_token);
-  console.log(login_type);
+
   if (!access_token) {
     return res.status(401).json({
       success: false,
@@ -54,9 +53,8 @@ export const auth = async (req, res, next) => {
                 data: null,
               });
             } else {
-              console.log(decodedRefresh);
               const hashedSession = await findSessions(decodedRefresh.id);
-              console.log(hashedSession);
+
               const isMatched = await checkBcrypt(
                 decodedRefresh.session_id,
                 hashedSession.session_id
@@ -67,14 +65,13 @@ export const auth = async (req, res, next) => {
                   id: decodedRefresh.id,
                   email: decodedRefresh.email,
                 });
-                console.log("newaccesstoken", newAccessToken);
                 req.decodedToken = decodedRefresh;
                 res.cookie("access_token", newAccessToken, {
                   signed: true,
                   secure: true,
                   httpOnly: true,
                   secret: SIGNED_COOKIE_SECRET,
-                  domain: "127.0.0.1",
+                  domain: FRONT_END_DOMAIN,
                   sameSite: "none",
                   path: "/",
                 });
@@ -100,12 +97,10 @@ export const auth = async (req, res, next) => {
     const accessResponse = await authorizeOAuthAccess({
       access_token,
     });
-    console.log(accessResponse);
     if (accessResponse === "invalid_token") {
       const refreshResponse = await getAccessWithRefreshToken({
         refresh_token,
       });
-      console.log(refreshResponse);
       const newAccessResponse = await authorizeOAuthAccess({
         access_token: refreshResponse.access_token,
       });
@@ -115,19 +110,18 @@ export const auth = async (req, res, next) => {
       );
 
       req.decodedToken = { id, username, email };
-      console.log("lewat sini 2");
+
       res.cookie("access_token", refreshResponse.access_token, {
         signed: true,
         secure: true,
         httpOnly: true,
         secret: SIGNED_COOKIE_SECRET,
-        domain: "127.0.0.1",
+        domain: FRONT_END_DOMAIN,
         sameSite: "none",
         path: "/",
       });
       return next();
     }
-    console.log("lewat sini");
     const { id, username, email } = await userDataByEmail(accessResponse.email);
 
     req.decodedToken = { id, username, email };

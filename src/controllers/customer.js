@@ -23,17 +23,17 @@ import {
   getGoogleOAuthURL,
   getGoogleUser,
 } from "../utils/Oauth.js";
-const { SIGNED_COOKIE_SECRET } = process.env;
+const { SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
 
 export const register = async (req, res) => {
-  const { username, email, phone_number, password } = req.body;
+  const { username, email, password } = req.body;
   try {
-    if (username && email && password && phone_number) {
+    if (username && email && password) {
       const exist = (await userDataByEmail(email)) ? true : false;
 
       if (exist) {
         const hashedPassword = await hashPassword(password);
-        await insertCustomer(username, email, phone_number, hashedPassword);
+        await insertCustomer(username, email, hashedPassword);
         return res.status(201).json({
           success: true,
           message: "Account successfully created",
@@ -98,7 +98,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: "127.0.0.1",
+              domain: FRONT_END_DOMAIN,
               sameSite: "none",
               path: "/",
             })
@@ -107,7 +107,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: "127.0.0.1",
+              domain: FRONT_END_DOMAIN,
               sameSite: "none",
               path: "/",
             })
@@ -116,7 +116,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: "127.0.0.1",
+              domain: FRONT_END_DOMAIN,
               sameSite: "none",
               path: "/",
             })
@@ -159,11 +159,32 @@ export const login = async (req, res) => {
 };
 export const logout = async (req, res) => {
   return res
-    .clearCookie("authorization", {
+    .clearCookie("access_token", {
       signed: true,
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
+      domain: FRONT_END_DOMAIN,
+      sameSite: "none",
+      path: "/",
+    })
+    .clearCookie("refresh_token", {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+      domain: FRONT_END_DOMAIN,
+      sameSite: "none",
+      path: "/",
+    })
+    .clearCookie("login_type", {
+      signed: true,
+      secure: true,
+      httpOnly: true,
+      secret: SIGNED_COOKIE_SECRET,
+      domain: FRONT_END_DOMAIN,
+      sameSite: "none",
+      path: "/",
     })
     .status(200)
     .json({
@@ -216,7 +237,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: "127.0.0.1",
+      domain: FRONT_END_DOMAIN,
       sameSite: "none",
       path: "/",
     });
@@ -225,7 +246,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: "127.0.0.1",
+      domain: FRONT_END_DOMAIN,
       sameSite: "none",
       path: "/",
     });
@@ -234,7 +255,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: "127.0.0.1",
+      domain: FRONT_END_DOMAIN,
       sameSite: "none",
       path: "/",
     });

@@ -11,19 +11,18 @@ export const userDataByEmail = async (email) => {
 export const insertCustomer = async (
   username,
   email,
-  phone_number,
-  password
+  password,
+  phone_number = "-",
+  picture = "https://ik.imagekit.io/neuros123/default-profile-pic.png"
 ) => {
   try {
-    const defaultPicture =
-      "https://ik.imagekit.io/neuros123/default-profile-pic.png";
     const [result] = await knexConnection("customer").insert([
       {
         username,
         email,
-        phone_number,
         password,
-        picture: defaultPicture,
+        phone_number,
+        picture,
       },
     ]);
     return result;

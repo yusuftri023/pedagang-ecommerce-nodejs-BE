@@ -1,10 +1,8 @@
 import { insertCategory, showCategory } from "../models/category.js";
 
 export const allCategory = async (req, res) => {
-  const { page, limit } = req.query;
-
   try {
-    const result = await showCategory(page, limit);
+    const result = await showCategory();
     if (result) {
       return res.status(200).json({
         success: true,
