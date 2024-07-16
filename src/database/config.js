@@ -1,5 +1,6 @@
 import "dotenv/config";
 import mysql from "mysql2/promise";
+import knex from "knex";
 const {
   DATABASE_HOST,
   DATABASE_USER,
@@ -8,7 +9,6 @@ const {
   DATABASE_PORT,
 } = process.env;
 
-import knex from "knex";
 export const knexConnection = knex({
   client: "mysql2",
   connection: {
@@ -20,8 +20,46 @@ export const knexConnection = knex({
   },
   pool: { min: 0, max: 10 },
 });
-knexConnection.select(1).then((res) => console.log("database connected"));
 
+// import dummy1 from "./dummy-1.json" with { type: "json" };
+// import dummy2 from "./dummy-2.json" with { type: "json" };
+// const dummy1map = dummy1.products.map((val) => {
+//   return {
+//     title: val.title,
+//     description: val.description,
+//     price: val.price,
+//     image: val.thumbnail,
+//     category: val.category,
+//   };
+// });
+// const dummy2map = dummy2.map((val) => {
+//   return {
+//     title: val.title,
+//     description: val.description,
+//     price: val.price,
+//     image: val.image,
+//     category: val.category,
+//   };
+// });
+// const allDummy = [...dummy1map, ...dummy2map].map(
+//   ({ title, description, image }) => {
+//     return {
+//       title,
+//       description,
+//       image,
+//       category_id: 3,
+//     };
+//   }
+// );
+
+// console.log(allDummy);
+
+knexConnection.select(1).then(() => console.log("database connected"));
+// knexConnection("product")
+//   .insert(allDummy)
+//   .onConflict("title")
+//   .merge(["description", "image", "category_id"])
+//   .then(() => console.log("insert success"));
 export const pool = mysql.createPool({
   host: DATABASE_HOST,
   user: DATABASE_USER,

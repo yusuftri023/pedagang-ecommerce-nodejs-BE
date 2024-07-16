@@ -31,6 +31,32 @@ export const allPromotion = async (req, res) => {
     });
   }
 };
+export const usePromotion = async (req, res) => {
+  const { promotionCode } = req.params;
+
+  try {
+    const result = await showPromotionDetail(promotionCode);
+    if (result) {
+      return res.status(200).json({
+        success: true,
+        message: "Data Fetch success",
+        data: result,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "This promotion does not exist",
+        data: null,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 
 export const addPromotion = async (req, res) => {
   const {
@@ -79,19 +105,20 @@ export const addPromotion = async (req, res) => {
 };
 
 export const deletePromotion = async (req, res) => {
-  const { promotionId } = req.params;
+  const { promotionCode } = req.params;
   try {
-    const promotionEntry = await showPromotionDetail(promotionId);
+    const promotionEntry = await showPromotionDetail(promotionCode);
 
     const promotionItemsExist =
       promotionEntry.length > 0
         ? promotionEntry.some(
-            ({ id: dbPromotionId }) => Number(promotionId) === dbPromotionId
+            ({ id: dbpromotionCode }) =>
+              Number(promotionCode) === dbpromotionCode
           )
         : false;
 
     if (promotionItemsExist) {
-      await deletePromotionEntry(promotionId);
+      await deletePromotionEntry(promotionCode);
       return res.status(200).json({
         success: true,
         message: "Promotion entry deleted",

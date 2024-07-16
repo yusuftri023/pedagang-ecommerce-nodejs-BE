@@ -1,10 +1,13 @@
 import { knexConnection } from "../database/config.js";
 
-export const showPromotionDetail = async (promotionId) => {
+export const showPromotionDetail = async (promotionCode) => {
   try {
     const result = await knexConnection
-      .from("promotion")
-      .where("id", promotionId);
+      .from("promotion as p")
+      .select("p.*", "pc.*", "c.name as category_name")
+      .join("promotion_category as pc", "pc.promotion_code", "p.code")
+      .join("category as c", "c.id", "pc.category_id")
+      .where("code", promotionCode);
 
     return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
   } catch (error) {

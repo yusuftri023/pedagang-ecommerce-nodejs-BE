@@ -67,12 +67,14 @@ export const login = async (req, res) => {
   try {
     if (email && password) {
       const data = await userDataByEmail(email);
+
       if (data) {
         const {
           email: emailData,
           username: usernameData,
           id: idData,
           password: passwordData,
+          picture: pictureData,
         } = data;
         const isMatch = await checkBcrypt(password, passwordData);
         if (isMatch) {
@@ -80,15 +82,14 @@ export const login = async (req, res) => {
             id: idData,
             username: usernameData,
             email: emailData,
+            picture: pictureData,
           };
 
           const access_token = await createAccessToken(tokenData);
           const uuid = uuidv4();
           const refresh_token = await createRefreshToken({
             session_id: uuid,
-            id: idData,
-            username: usernameData,
-            email: emailData,
+            ...tokenData,
           });
           const hashedRefreshToken = await hashRefreshToken(uuid);
           await createSession(idData, hashedRefreshToken, "Web");

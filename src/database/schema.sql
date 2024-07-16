@@ -62,7 +62,7 @@ CREATE TABLE promotion_category(
 );
 CREATE TABLE product(
     id SERIAL,
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL ,
     description VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     stock INT NOT NULL,
@@ -71,6 +71,8 @@ CREATE TABLE product(
     PRIMARY KEY(id),
     CONSTRAINT fk_product_category Foreign Key (category_id) REFERENCES category(id)
 );
+-- untuk search case insensitive di column title memerlukan character set UTF8MB4 --
+alter table product modify column title varchar(255) character set UTF8MB4 collate utf8mb4_unicode_ci;
 create table variation(
 	id SERIAL,
 	category_id BIGINT UNSIGNED not null,

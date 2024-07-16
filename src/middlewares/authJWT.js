@@ -64,6 +64,7 @@ export const auth = async (req, res, next) => {
                   username: decodedRefresh.username,
                   id: decodedRefresh.id,
                   email: decodedRefresh.email,
+                  picture: decodedRefresh.picture,
                 });
                 req.decodedToken = decodedRefresh;
                 res.cookie("access_token", newAccessToken, {
@@ -105,11 +106,11 @@ export const auth = async (req, res, next) => {
         access_token: refreshResponse.access_token,
       });
 
-      const { id, username, email } = await userDataByEmail(
+      const { id, username, email, picture } = await userDataByEmail(
         newAccessResponse.email
       );
 
-      req.decodedToken = { id, username, email };
+      req.decodedToken = { id, username, email, picture };
 
       res.cookie("access_token", refreshResponse.access_token, {
         signed: true,
@@ -122,9 +123,11 @@ export const auth = async (req, res, next) => {
       });
       return next();
     }
-    const { id, username, email } = await userDataByEmail(accessResponse.email);
+    const { id, username, email, picture } = await userDataByEmail(
+      accessResponse.email
+    );
 
-    req.decodedToken = { id, username, email };
+    req.decodedToken = { id, username, email, picture };
     next();
   }
 };

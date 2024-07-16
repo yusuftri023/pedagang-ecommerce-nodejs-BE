@@ -12,6 +12,7 @@ export const customerWishlist = async (req, res) => {
 
   try {
     const result = await wishlistItems(customerId, page, limit);
+
     if (result.length > 0) {
       return res.status(200).json({
         success: true,
@@ -19,10 +20,10 @@ export const customerWishlist = async (req, res) => {
         data: result,
       });
     } else {
-      return res.status(404).json({
-        success: false,
+      return res.status(200).json({
+        success: true,
         message: "wishlist is empty",
-        data: null,
+        data: [],
       });
     }
   } catch (error) {
@@ -35,10 +36,11 @@ export const customerWishlist = async (req, res) => {
 };
 export const addWishlist = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { product_id: productId } = req.body;
+  const { product_id: productId, product_config_id: productConfigId } =
+    req.body;
 
   try {
-    const isMatch = await checkWishlist(customerId, productId);
+    const isMatch = await checkWishlist(customerId, productId, productConfigId);
     if (isMatch) {
       return res.status(400).json({
         success: false,
@@ -46,7 +48,7 @@ export const addWishlist = async (req, res) => {
         data: null,
       });
     } else {
-      await insertWishlist(customerId, productId);
+      await insertWishlist(customerId, productId, productConfigId);
       return res.status(200).json({
         success: true,
         message: "Item added to the wishlist",
