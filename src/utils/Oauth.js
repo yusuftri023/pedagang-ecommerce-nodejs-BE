@@ -11,7 +11,7 @@ const {
 export async function getGoogleOAuthURL() {
   const url = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
-    redirect_uri: "https://127.0.0.1:8080/auth/google/callback",
+    redirect_uri: GOOGLE_REDIRECT_URL,
     client_id: GOOGLE_CLIENT_ID,
     access_type: "offline",
     response_type: "code",
