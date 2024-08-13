@@ -262,7 +262,7 @@ export const googleLogin = async (req, res) => {
       sameSite: "none",
       path: "/",
     });
-    return res.redirect(`https://${FRONT_END_DOMAIN}:5173/`);
+    return res.redirect(`https://${FRONT_END_DOMAIN}`);
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }
