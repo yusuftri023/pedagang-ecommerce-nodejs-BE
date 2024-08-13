@@ -20,7 +20,13 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://127.0.0.1:5173",
+      "https://127.0.0.1:8080",
+      // `https://${FRONT_END_DOMAIN}:5173`,
+      `https://${FRONT_END_DOMAIN}`,
+      "https://pedagang-ecommerce.onrender.com",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
