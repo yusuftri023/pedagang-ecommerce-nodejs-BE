@@ -16,7 +16,7 @@ export const showSearchProduct = async (keyword) => {
       .join("variation_option as vo", "vo.id", "pc.variation_option_id")
       .join("variation as v", "v.id", "vo.variation_id")
       .join("category as ca", "ca.id", "p.category_id")
-      .where("p.title", "like", `%${keyword}%`);
+      .where("p.title", "ilike", `%${keyword}%`);
 
     return result;
   } catch (error) {
