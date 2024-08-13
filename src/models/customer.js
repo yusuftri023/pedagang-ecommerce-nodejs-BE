@@ -3,7 +3,7 @@ import { knexConnection } from "../database/config.js";
 export const userDataByEmail = async (email) => {
   try {
     const result = await knexConnection.from("customer").where("email", email);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+    return result;
   } catch (error) {
     throw new Error(error.message);
   }
