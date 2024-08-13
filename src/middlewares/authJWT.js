@@ -72,7 +72,7 @@ export const auth = async (req, res, next) => {
                   secure: true,
                   httpOnly: true,
                   secret: SIGNED_COOKIE_SECRET,
-                  domain: "onrender.com",
+                  domain: FRONT_END_DOMAIN,
                   sameSite: "none",
                   path: "/",
                 });
@@ -117,7 +117,7 @@ export const auth = async (req, res, next) => {
         secure: true,
         httpOnly: true,
         secret: SIGNED_COOKIE_SECRET,
-        domain: "onrender.com",
+        domain: FRONT_END_DOMAIN,
         sameSite: "none",
         path: "/",
       });
