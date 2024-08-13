@@ -62,7 +62,7 @@ export const insertWishlist = async (
   product_config_id
 ) => {
   try {
-    const [result] = await knexConnection("wishlist").insert([
+    const result = await knexConnection("wishlist").insert([
       {
         customer_id,
         product_id,

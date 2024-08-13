@@ -6,19 +6,25 @@ import "dotenv/config";
 import router from "./routes/router.js";
 import logger from "./middlewares/logger.js";
 import cookieParser from "cookie-parser";
-import { auth } from "./middlewares/authJWT.js";
+
 const app = express();
-const { SERVER_PORT, SIGNED_COOKIE_SECRET } = process.env;
+const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
 const options = {
-  key: fs.readFileSync("./src/utils/SSL-Certificate/127.0.0.1-key.pem"),
-  cert: fs.readFileSync("./src/utils/SSL-Certificate/127.0.0.1.pem"),
+  key: fs.readFileSync(
+    `./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}-key.pem`
+  ),
+  cert: fs.readFileSync(`./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}.pem`),
 };
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(
   cors({
-    origin: ["https://127.0.0.1:5173", "https://127.0.0.1:8080"],
+    origin: [
+      "https://127.0.0.1:5173",
+      "https://127.0.0.1:8080",
+      `https://${FRONT_END_DOMAIN}:5173`,
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })

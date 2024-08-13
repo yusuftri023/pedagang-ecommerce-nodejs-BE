@@ -8,8 +8,7 @@ export const showPromotionDetail = async (promotionCode) => {
       .join("promotion_category as pc", "pc.promotion_code", "p.code")
       .join("category as c", "c.id", "pc.category_id")
       .where("code", promotionCode);
-
-    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
+    return result.length > 0 ? result : false;
   } catch (error) {
     throw new Error(error.message);
   }

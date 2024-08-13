@@ -4,6 +4,8 @@ import {
   showAllProduct,
   showDetailProduct,
   showDetailProductVariation,
+  showProductRating,
+  showProductReview,
   showSearchProduct,
 } from "../models/product.js";
 
@@ -49,11 +51,10 @@ export const searchProduct = async (req, res) => {
     });
   }
 };
-export const detailProduct = async (req, res) => {
+export const productReview = async (req, res) => {
   const { productId } = req.params;
-
   try {
-    const result = await showDetailProduct(productId);
+    const result = await showProductReview(productId);
     if (result.length > 0) {
       return res.status(200).json({
         success: true,
@@ -61,7 +62,59 @@ export const detailProduct = async (req, res) => {
         data: result,
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
+        success: false,
+        message: "Product review does not exist",
+        data: [],
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+export const productRating = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const result = await showProductRating(productId);
+    if (result.length > 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Data Fetch success",
+        data: result,
+      });
+    } else {
+      return res.status(200).json({
+        success: false,
+        message: "Product rating does not exist",
+        data: [],
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+export const detailProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const result = await showDetailProduct(productId);
+    console.log(result);
+    if (result.length > 0) {
+      return res.status(200).json({
+        success: true,
+        message: "Data Fetch success",
+        data: result,
+      });
+    } else {
+      return res.status(200).json({
         success: false,
         message: "Product details does not exist",
         data: null,

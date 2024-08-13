@@ -2,7 +2,7 @@ import { knexConnection } from "../database/config.js";
 
 export const showVariationDetail = async (variationId) => {
   try {
-    const [result] = await knexConnection
+    const result = await knexConnection
       .from("variation")
       .where("id", variationId);
 

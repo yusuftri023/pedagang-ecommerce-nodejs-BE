@@ -73,6 +73,18 @@ CREATE TABLE product(
 );
 -- untuk search case insensitive di column title memerlukan character set UTF8MB4 --
 alter table product modify column title varchar(255) character set UTF8MB4 collate utf8mb4_unicode_ci;
+
+create table review(
+    id SERIAL,
+    rating INT(1) NOT NULL DEFAULT 5,
+    comment VARCHAR(1000),
+    date timestamp(0) not null default now(),
+    customer_id BIGINT UNSIGNED NOT NULL,
+    product_config_id BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_product_review Foreign Key (product_config_id) REFERENCES product_config(id),
+    CONSTRAINT fk_customer_review Foreign Key (customer_id) REFERENCES customer(id)
+);
 create table variation(
 	id SERIAL,
 	category_id BIGINT UNSIGNED not null,

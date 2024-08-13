@@ -14,7 +14,7 @@ export const showPayment = async (paymentId, customerId) => {
 
 export const insertPayment = async (amount, customer_id, payment_method_id) => {
   try {
-    const [result] = await knexConnection("payment").insert([
+    const result = await knexConnection("payment").insert([
       { amount, customer_id, payment_method_id },
     ]);
     return result;
@@ -25,7 +25,7 @@ export const insertPayment = async (amount, customer_id, payment_method_id) => {
 
 export const insertPaymentMethod = async (name) => {
   try {
-    const [result] = await knexConnection("payment_method").insert([
+    const result = await knexConnection("payment_method").insert([
       {
         name,
       },

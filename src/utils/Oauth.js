@@ -2,8 +2,12 @@ import axios from "axios";
 import qs from "qs";
 import "dotenv/config";
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URL } =
-  process.env;
+const {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URL,
+  FRONT_END_DOMAIN,
+} = process.env;
 export async function getGoogleOAuthURL() {
   const url = "https://accounts.google.com/o/oauth2/v2/auth";
   const options = {
@@ -30,7 +34,7 @@ export async function getGoogleOAuthTokens({ code }) {
     code,
     client_id: GOOGLE_CLIENT_ID,
     client_secret: GOOGLE_CLIENT_SECRET,
-    redirect_uri: GOOGLE_REDIRECT_URL,
+    redirect_uri: `https://${FRONT_END_DOMAIN}:8080/auth/google/callback`,
   };
 
   try {

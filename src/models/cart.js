@@ -27,7 +27,7 @@ export const cartData = async (customerId) => {
       .join("category as ca", "ca.id", "p.category_id")
       .where("customer_id", customerId);
 
-    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
+    return result;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -39,7 +39,7 @@ export const insertCart = async (
   product_config_id
 ) => {
   try {
-    const [result] = await knexConnection("cart").insert([
+    const result = await knexConnection("cart").insert([
       {
         quantity,
         customer_id,
@@ -67,10 +67,11 @@ export const updateQuantityCart = async (cartId, customerId, quantity) => {
   try {
     const result = await knexConnection("cart")
       .update({
-        quantity,
+        quantity: quantity,
       })
       .where("id", cartId)
       .andWhere("customer_id", customerId);
+
     return result;
   } catch (error) {
     throw new Error(error.message);

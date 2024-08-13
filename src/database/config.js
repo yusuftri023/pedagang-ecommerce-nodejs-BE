@@ -10,17 +10,31 @@ const {
 } = process.env;
 
 export const knexConnection = knex({
-  client: "mysql2",
+  client: "pg",
   connection: {
     host: DATABASE_HOST,
     port: DATABASE_PORT,
     user: DATABASE_USER,
-    password: DATABASE_PASSWORD,
     database: DATABASE_NAME,
+    password: DATABASE_PASSWORD,
+    ssl: false ? { rejectUnauthorized: false } : false,
   },
-  pool: { min: 0, max: 10 },
+  pool: {
+    min: 0,
+    max: 10,
+  },
 });
-
+// const pg = require("knex")({
+//   client: "pg",
+//   connection: {
+//     host: "aws-0-ap-southeast-1.pooler.supabase.com",
+//     port: 6543,
+//     user: "postgres.wrkeepqheqtybmystapb",
+//     database: "postgres",
+//     password: "mMaARb8mgpYFt8fa",
+//     ssl: false ? { rejectUnauthorized: false } : false,
+//   },
+// });
 // import dummy1 from "./dummy-1.json" with { type: "json" };
 // import dummy2 from "./dummy-2.json" with { type: "json" };
 // const dummy1map = dummy1.products.map((val) => {
@@ -60,11 +74,11 @@ knexConnection.select(1).then(() => console.log("database connected"));
 //   .onConflict("title")
 //   .merge(["description", "image", "category_id"])
 //   .then(() => console.log("insert success"));
-export const pool = mysql.createPool({
-  host: DATABASE_HOST,
-  user: DATABASE_USER,
-  database: DATABASE_NAME,
-  password: DATABASE_PASSWORD,
-  multipleStatements: true,
-  port: DATABASE_PORT,
-});
+// export const pool = mysql.createPool({
+//   host: DATABASE_HOST,
+//   user: DATABASE_USER,
+//   database: DATABASE_NAME,
+//   password: DATABASE_PASSWORD,
+//   multipleStatements: true,
+//   port: DATABASE_PORT,
+// });

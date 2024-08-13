@@ -36,22 +36,22 @@ export const cartLists = async (req, res) => {
 export const addToCart = async (req, res) => {
   const { id: customerId } = req.decodedToken;
 
-  const { product_id, product_config_id } = req.body;
-  let { quantity } = req.body;
+  const { product_id, product_config_id, quantity } = req.body;
 
-  quantity = Number(quantity) ? Number(quantity) : 1;
+  // quantity = Number(quantity) ? Number(quantity) : 1;
   try {
     const cartItems = await cartData(customerId);
-    const cartItemsExist = cartItems
-      ? cartItems.some(
-          ({ product_id: dbProductId, product_config_id: dbProductConfigId }) =>
-            product_id === dbProductId &&
-            dbProductConfigId === product_config_id
-        )
-      : false;
+    const cartItemsExist = cartItems.some(
+      ({ product_id: dbProductId, product_config_id: dbProductConfigId }) => {
+        return (
+          Number(product_id) === Number(dbProductId) &&
+          Number(dbProductConfigId) === Number(product_config_id)
+        );
+      }
+    );
 
     if (!cartItemsExist) {
-      if (quantity > 0 && product_id && product_config_id) {
+      if (Number(quantity) > 0 && product_id && product_config_id) {
         await insertCart(quantity, customerId, product_id, product_config_id);
         return res.status(201).json({
           success: true,
@@ -68,15 +68,16 @@ export const addToCart = async (req, res) => {
     } else {
       const cartItem = cartItems.find(
         ({ product_id: dbProductId, product_config_id: dbProductConfigId }) =>
-          product_id === dbProductId && dbProductConfigId === product_config_id
+          Number(product_id) === Number(dbProductId) &&
+          Number(dbProductConfigId) === Number(product_config_id)
       );
 
-      quantity =
+      const newQuantity =
         cartItem.quantity + quantity > cartItem.stock
           ? cartItem.stock
           : cartItem.quantity + quantity;
 
-      await updateQuantityCart(cartItem.cart_id, customerId, quantity);
+      await updateQuantityCart(cartItem.cart_id, customerId, newQuantity);
 
       return res.status(200).json({
         success: true,
@@ -130,10 +131,11 @@ export const changeChartItemQuantity = async (req, res) => {
 
   try {
     const cartItems = await cartData(customerId);
-
     const cartItemsExist =
       cartItems.length > 0
-        ? cartItems.some(({ cart_id: dbCartId }) => Number(cartId) === dbCartId)
+        ? cartItems.some(
+            ({ cart_id: dbCartId }) => Number(cartId) === Number(dbCartId)
+          )
         : false;
     if (cartItemsExist) {
       if (quantity > 0) {
@@ -176,7 +178,9 @@ export const deleteCartItem = async (req, res) => {
     const cartItems = await cartData(customerId);
 
     const cartItemsExist = cartItems
-      ? cartItems.some(({ cart_id: dbCartId }) => Number(cartId) === dbCartId)
+      ? cartItems.some(
+          ({ cart_id: dbCartId }) => Number(cartId) === Number(dbCartId)
+        )
       : false;
     if (cartItemsExist) {
       await deleteCartEntry(cartId, customerId);

@@ -12,7 +12,7 @@ export const showCategory = async () => {
 
 export const insertCategory = async (name, description = "-") => {
   try {
-    const [result] = await knexConnection("category").insert([
+    const result = await knexConnection("category").insert([
       { name, description },
     ]);
     return result;

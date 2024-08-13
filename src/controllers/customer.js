@@ -86,12 +86,14 @@ export const login = async (req, res) => {
           };
 
           const access_token = await createAccessToken(tokenData);
+
           const uuid = uuidv4();
           const refresh_token = await createRefreshToken({
             session_id: uuid,
             ...tokenData,
           });
           const hashedRefreshToken = await hashRefreshToken(uuid);
+
           await createSession(idData, hashedRefreshToken, "Web");
           return res
             .cookie("access_token", access_token, {
@@ -260,7 +262,7 @@ export const googleLogin = async (req, res) => {
       sameSite: "none",
       path: "/",
     });
-    return res.redirect("https://127.0.0.1:5173/");
+    return res.redirect(`https://${FRONT_END_DOMAIN}:5173/`);
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

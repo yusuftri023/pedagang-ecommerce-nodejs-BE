@@ -16,7 +16,7 @@ export const insertCustomer = async (
   picture = "https://ik.imagekit.io/neuros123/default-profile-pic.png"
 ) => {
   try {
-    const [result] = await knexConnection("customer").insert([
+    const result = await knexConnection("customer").insert([
       {
         username,
         email,
@@ -38,7 +38,7 @@ export const upsertGoogle = async (
   google_id
 ) => {
   try {
-    const [result] = await knexConnection("customer")
+    const result = await knexConnection("customer")
       .insert({
         email,
         verified: verified_email,

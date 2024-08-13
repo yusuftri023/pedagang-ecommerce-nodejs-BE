@@ -43,7 +43,7 @@ export const usePromotion = async (req, res) => {
         data: result,
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
         message: "This promotion does not exist",
         data: null,
