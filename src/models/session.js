@@ -13,7 +13,7 @@ export async function createSession(customerId, hashedSession, loginType) {
         .merge({ session_id: hashedSession, login_type: loginType });
       return session;
     } else if (loginType === "Google Oauth") {
-      const [session] = await knexConnection("session")
+      const session = await knexConnection("session")
         .insert({
           customer_id: customerId,
           session_id: hashedSession,

@@ -233,8 +233,7 @@ export const googleLogin = async (req, res) => {
     await upsertGoogle(email, verified_email, name, picture, id);
     const customerData = await userDataByEmail(email);
     const hashedRefreshToken = await hashRefreshToken(refresh_token);
-    console.log(customerData);
-    console.log(customerData.id);
+
     await createSession(
       Number(customerData.id),
       hashedRefreshToken,
