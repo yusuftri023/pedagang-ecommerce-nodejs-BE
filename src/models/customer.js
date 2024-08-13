@@ -38,6 +38,7 @@ export const upsertGoogle = async (
   google_id
 ) => {
   try {
+    verified_email = verified_email === true ? 1 : 0;
     const result = await knexConnection("customer")
       .insert({
         email,
