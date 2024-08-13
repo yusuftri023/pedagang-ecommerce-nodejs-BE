@@ -10,10 +10,10 @@ import cookieParser from "cookie-parser";
 const app = express();
 const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
 const options = {
-  key: fs.readFileSync(
-    `./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}-key.pem`
-  ),
-  cert: fs.readFileSync(`./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}.pem`),
+  // key: fs.readFileSync(
+  //   `./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}-key.pem`
+  // ),
+  // cert: fs.readFileSync(`./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}.pem`),
 };
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
