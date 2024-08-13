@@ -34,7 +34,7 @@ export async function getGoogleOAuthTokens({ code }) {
     code,
     client_id: GOOGLE_CLIENT_ID,
     client_secret: GOOGLE_CLIENT_SECRET,
-    redirect_uri: `https://${FRONT_END_DOMAIN}/auth/google/callback`,
+    redirect_uri: GOOGLE_REDIRECT_URL,
   };
 
   try {
