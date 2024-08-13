@@ -1,6 +1,6 @@
 import express from "express";
-import https from "https";
-import fs from "fs";
+// import https from "https";
+// import fs from "fs";
 import cors from "cors";
 import "dotenv/config";
 import router from "./routes/router.js";
@@ -9,12 +9,12 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
-const options = {
-  // key: fs.readFileSync(
-  //   `./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}-key.pem`
-  // ),
-  // cert: fs.readFileSync(`./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}.pem`),
-};
+// const options = {
+//   key: fs.readFileSync(
+//     `./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}-key.pem`
+//   ),
+//   cert: fs.readFileSync(`./src/utils/SSL-Certificate/${FRONT_END_DOMAIN}.pem`),
+// };
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -45,6 +45,9 @@ app.use("*", (req, res) => {
     data: null,
   });
 });
-https.createServer(options, app).listen(SERVER_PORT || 8080, () => {
-  console.log(`Server Running at 127.0.0.1:${SERVER_PORT || 8080}`);
+app.listen(SERVER_PORT || 8080, () => {
+  console.log(`Server is currently running`);
 });
+// https.createServer(options, app).listen(SERVER_PORT || 8080, () => {
+//   console.log(`Server Running at 127.0.0.1:${SERVER_PORT || 8080}`);
+// });
