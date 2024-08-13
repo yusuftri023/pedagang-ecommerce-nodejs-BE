@@ -101,7 +101,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: FRONT_END_DOMAIN,
+              domain: "onrender.com",
               sameSite: "none",
               path: "/",
             })
@@ -110,7 +110,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: FRONT_END_DOMAIN,
+              domain: "onrender.com",
               sameSite: "none",
               path: "/",
             })
@@ -119,7 +119,7 @@ export const login = async (req, res) => {
               secure: true,
               httpOnly: true,
               secret: SIGNED_COOKIE_SECRET,
-              domain: FRONT_END_DOMAIN,
+              domain: "onrender.com",
               sameSite: "none",
               path: "/",
             })
@@ -167,7 +167,7 @@ export const logout = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     })
@@ -176,7 +176,7 @@ export const logout = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     })
@@ -185,7 +185,7 @@ export const logout = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     })
@@ -245,7 +245,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     });
@@ -254,7 +254,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     });
@@ -263,7 +263,7 @@ export const googleLogin = async (req, res) => {
       secure: true,
       httpOnly: true,
       secret: SIGNED_COOKIE_SECRET,
-      domain: FRONT_END_DOMAIN,
+      domain: "onrender.com",
       sameSite: "none",
       path: "/",
     });
