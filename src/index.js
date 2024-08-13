@@ -45,6 +45,6 @@ app.use("*", (req, res) => {
     data: null,
   });
 });
-https.createServer(options, app).listen(SERVER_PORT, () => {
-  console.log(`Server Running at 127.0.0.1:${SERVER_PORT}`);
+https.createServer(options, app).listen(SERVER_PORT || 8080, () => {
+  console.log(`Server Running at 127.0.0.1:${SERVER_PORT || 8080}`);
 });
