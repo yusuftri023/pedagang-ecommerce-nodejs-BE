@@ -4,7 +4,7 @@ import { apiClient } from "../utils/midtrans.js";
 export const midtransTransactionNotification = async (req, res) => {
   try {
     const { transaction_id } = req.body;
-
+    console.log(req.body);
     const statusResponse = await apiClient.transaction.notification(
       JSON.stringify(req.body)
     );
