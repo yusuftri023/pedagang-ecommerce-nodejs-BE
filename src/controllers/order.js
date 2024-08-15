@@ -3,8 +3,10 @@ import {
   allCustomerOrders,
   insertOrder,
   orderItemsList,
+  updateLinkOrder,
 } from "../models/order.js";
 import { midtransCreateTransaction } from "../utils/midtrans.js";
+import { customer } from "./customer.js";
 
 export const customerOrderItemsList = async (req, res) => {
   const { id: customerId } = req.decodedToken;
@@ -75,6 +77,32 @@ export const createOrder = async (req, res) => {
         order_list,
         customer_details
       );
+      return res.status(201).json({
+        success: true,
+        message: "Order successfully created",
+        data: result,
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Request is not complete ",
+        data: null,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+export const newOrderLink = async (req, res) => {
+  const { id: customerId } = req.decodedToken;
+  const { order_id: orderId, payment_link: paymentLink } = req.body;
+  try {
+    if (customerId) {
+      await updateLinkOrder(orderId, customerId, paymentLink);
       return res.status(201).json({
         success: true,
         message: "Order successfully created",

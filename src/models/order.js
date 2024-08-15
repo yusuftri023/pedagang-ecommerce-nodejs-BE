@@ -46,7 +46,6 @@ export const insertOrder = async (
   const { items, total_price } = orderList;
 
   try {
-    console.log(items, total_price);
     const [shipment] = await trx("shipment")
       .insert({
         address_id: addressId,
@@ -72,8 +71,8 @@ export const insertOrder = async (
       })
       .returning("id");
     const orderId = order.id;
-    const orderItems = items.map(({ product_id, quantity, price }) => {
-      return { product_id, quantity, price, order_id: orderId };
+    const orderItems = items.map(({ product_config_id, quantity }) => {
+      return { product_config_id, quantity, order_id: orderId };
     });
     await trx("order_item").insert(orderItems);
 
@@ -92,6 +91,20 @@ export const updateStatusOrder = async (orderId, transactionId, statusName) => {
         transaction_id: transactionId,
       })
       .where("id", orderId);
+
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const updateLinkOrder = async (orderId, customerId, paymentLink) => {
+  try {
+    const result = await knexConnection("order_detail")
+      .update({
+        payment_link: paymentLink,
+      })
+      .where("id", orderId)
+      .andWhere("customer_id", customerId);
 
     return result;
   } catch (error) {

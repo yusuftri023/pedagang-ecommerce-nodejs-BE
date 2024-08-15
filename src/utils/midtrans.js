@@ -40,9 +40,9 @@ export const midtransCreateTransaction = async (
   };
 
   try {
-    const transactionResult = await apiClient.createTransaction(parameter);
+    const transactionResult = await apiClient.createTransactionToken(parameter);
     if (transactionResult.length === 0)
-      throw new Error("Gagal membuat transaksi ke midtrans");
+      throw new Error("Gagal membuat token transaksi ke midtrans");
 
     return transactionResult;
   } catch (error) {
