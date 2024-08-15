@@ -3,7 +3,7 @@ import {
   createOrder,
   customerOrderItemsList,
   customerOrders,
-  newOrderLink,
+  paymentToken,
 } from "../../../controllers/order.js";
 
 const router = express.Router();
@@ -11,6 +11,6 @@ const router = express.Router();
 router.get("/:orderId", customerOrderItemsList);
 router.get("/", customerOrders);
 router.post("/", createOrder);
-router.patch("/payment-link", newOrderLink);
+router.patch("/payment-link", paymentToken);
 
 export default router;
