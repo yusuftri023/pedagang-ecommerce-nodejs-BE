@@ -47,22 +47,22 @@ export const insertOrder = async (
 
   try {
     console.log(items, total_price);
-    const [shipmentId] = await trx("shipment")
+    const [shipment] = await trx("shipment")
       .insert({
         address_id: addressId,
         customer_id: customerId,
       })
       .returning("id");
-    console.log(shipmentId);
-    const [paymentId] = await trx("payment")
+    const shipmentId = shipment.id;
+    const [payment] = await trx("payment")
       .insert({
         amount: total_price,
         customer_id: customerId,
         payment_method_id,
       })
       .returning("id");
-    console.log(paymentId);
-    const [orderId] = await trx("order_detail")
+    const paymentId = payment.id;
+    const [order] = await trx("order_detail")
       .insert({
         customer_id: customerId,
         shipment_id: shipmentId,
@@ -71,7 +71,7 @@ export const insertOrder = async (
         status: "Menunggu pembuatan transaksi",
       })
       .returning("id");
-    console.log(orderId);
+    const orderId = order.id;
     const orderItems = items.map(({ product_id, quantity, price }) => {
       return { product_id, quantity, price, order_id: orderId };
     });
