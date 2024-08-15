@@ -46,24 +46,30 @@ export const insertOrder = async (
   const { items, total_price } = orderList;
 
   try {
-    const [shipmentId] = await trx("shipment").insert({
-      address_id: addressId,
-      customer_id: customerId,
-    });
+    const [shipmentId] = await trx("shipment")
+      .insert({
+        address_id: addressId,
+        customer_id: customerId,
+      })
+      .returning("id");
 
-    const [paymentId] = await trx("payment").insert({
-      amount: total_price,
-      customer_id: customerId,
-      payment_method_id,
-    });
+    const [paymentId] = await trx("payment")
+      .insert({
+        amount: total_price,
+        customer_id: customerId,
+        payment_method_id,
+      })
+      .returning("id");
 
-    const [orderId] = await trx("order_detail").insert({
-      customer_id: customerId,
-      shipment_id: shipmentId,
-      payment_id: paymentId,
-      total_price: total_price,
-      status: "Menunggu pembuatan transaksi",
-    });
+    const [orderId] = await trx("order_detail")
+      .insert({
+        customer_id: customerId,
+        shipment_id: shipmentId,
+        payment_id: paymentId,
+        total_price: total_price,
+        status: "Menunggu pembuatan transaksi",
+      })
+      .returning("id");
 
     const orderItems = items.map(({ product_id, quantity, price }) => {
       return { product_id, quantity, price, order_id: orderId };
