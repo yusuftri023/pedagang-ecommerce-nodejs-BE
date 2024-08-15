@@ -97,11 +97,11 @@ export const updateStatusOrder = async (orderId, transactionId, statusName) => {
     throw new Error(error.message);
   }
 };
-export const updateLinkOrder = async (orderId, customerId, paymentLink) => {
+export const updateTokenOrder = async (orderId, customerId, paymentToken) => {
   try {
     const result = await knexConnection("order_detail")
       .update({
-        payment_link: paymentLink,
+        payment_token: paymentToken,
       })
       .where("id", orderId)
       .andWhere("customer_id", customerId);

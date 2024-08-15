@@ -7,6 +7,8 @@ export const midtransTransactionNotification = async (req, res) => {
     const statusResponse = await apiClient.transaction.notification(
       JSON.stringify(req.body)
     );
+    console.log(req.body);
+    console.log(statusResponse);
     const {
       order_id: orderId,
       transaction_status: transactionStatus,
