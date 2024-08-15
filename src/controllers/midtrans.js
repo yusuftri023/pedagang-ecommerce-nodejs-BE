@@ -4,7 +4,6 @@ import { apiClient } from "../utils/midtrans.js";
 export const midtransTransactionNotification = async (req, res) => {
   try {
     const { transaction_id } = req.body;
-    console.log(req.body);
     const statusResponse = await apiClient.transaction.notification(
       JSON.stringify(req.body)
     );
@@ -21,42 +20,24 @@ export const midtransTransactionNotification = async (req, res) => {
     if (transactionStatus == "capture") {
       if (fraudStatus == "accept") {
         await updateStatusOrder(orderId, transaction_id, "Pesanan Diproses");
-
-        return res.status(200).json({
-          status_code: 200,
-          transaction_status: transactionStatus,
-          fraud_status: fraudStatus,
-        });
       }
     } else if (transactionStatus == "settlement") {
       await updateStatusOrder(orderId, transaction_id, "Pesanan Selesai");
-
-      return res.status(200).json({
-        status_code: 200,
-        transaction_status: transactionStatus,
-        fraud_status: fraudStatus,
-      });
     } else if (
       transactionStatus == "cancel" ||
       transactionStatus == "deny" ||
       transactionStatus == "expire"
     ) {
       await updateStatusOrder(orderId, transaction_id, "Pesanan Dibatalkan");
-
-      return res.status(200).json({
-        status_code: 200,
-        transaction_status: transactionStatus,
-        fraud_status: fraudStatus,
-      });
     } else if (transactionStatus == "pending") {
       await updateStatusOrder(orderId, transaction_id, "Menunggu Pembayaran");
-
-      return res.status(200).json({
-        status_code: 200,
-        transaction_status: transactionStatus,
-        fraud_status: fraudStatus,
-      });
     }
+
+    return res.status(200).json({
+      status_code: 200,
+      transaction_status: transactionStatus,
+      fraud_status: fraudStatus,
+    });
   } catch (error) {
     return res.status(500).json({
       status_code: 500,

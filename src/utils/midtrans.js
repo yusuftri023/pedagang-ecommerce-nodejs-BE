@@ -11,7 +11,9 @@ export const apiClient = new midtransClient.Snap({
 export const midtransCreateTransaction = async (
   orderId,
   order_list,
-  customer_details
+  customer_details,
+  shipping_cost,
+  discount
 ) => {
   const { email, phone_number: phone } = customer_details;
 
@@ -30,7 +32,21 @@ export const midtransCreateTransaction = async (
     },
     usage_limit: 1,
     expiry: { duration: 1, unit: "days" },
-    item_details: item_details,
+    item_details: [
+      ...item_details,
+      {
+        name: "Fee",
+        price: shipping_cost,
+        quantity: 1,
+        id: "F01",
+      },
+      {
+        name: "Discount",
+        price: -discount,
+        quantity: 1,
+        id: "D01",
+      },
+    ],
     customer_details: {
       email,
       phone,

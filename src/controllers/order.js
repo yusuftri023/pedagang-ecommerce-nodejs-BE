@@ -62,7 +62,8 @@ export const customerOrders = async (req, res) => {
 };
 export const createOrder = async (req, res) => {
   const { id: customerId, email: emailToken } = req.decodedToken;
-  const { order_list, address_id, payment_method_id } = req.body;
+  const { order_list, address_id, payment_method_id, discount, shipping_cost } =
+    req.body;
   try {
     if (order_list && customerId && address_id && payment_method_id) {
       const orderId = await insertOrder(
@@ -75,7 +76,9 @@ export const createOrder = async (req, res) => {
       const result = await midtransCreateTransaction(
         orderId,
         order_list,
-        customer_details
+        customer_details,
+        shipping_cost,
+        discount
       );
       return res.status(201).json({
         success: true,
