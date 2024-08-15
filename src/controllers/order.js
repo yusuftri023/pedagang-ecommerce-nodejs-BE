@@ -106,13 +106,14 @@ export const createOrder = async (req, res) => {
 export const paymentToken = async (req, res) => {
   const { id: customerId } = req.decodedToken;
   const { order_id: orderId, payment_token: paymentToken } = req.body;
+  console.log(req.body);
   try {
     if (customerId) {
       await updateTokenOrder(orderId, customerId, paymentToken);
       return res.status(201).json({
         success: true,
         message: "Order successfully created",
-        data: result,
+        data: null,
       });
     } else {
       return res.status(400).json({
