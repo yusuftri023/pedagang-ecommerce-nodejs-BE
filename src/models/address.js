@@ -69,11 +69,11 @@ export const selectAddress = async (addressId, customerId) => {
   try {
     await trx("customer_address")
       .update({
-        selected: true,
+        selected: 1,
       })
       .where("address_id", addressId);
     await trx("customer_address")
-      .update({ selected: false })
+      .update({ selected: 0 })
       .where("customer_id", customerId)
       .andWhereNot("address_id", addressId);
     return true;
