@@ -65,17 +65,18 @@ export const updateAddress = async (
   }
 };
 export const selectAddress = async (addressId, customerId) => {
+  const trx = await knexConnection.transaction();
   try {
-    const result = await knexConnection("customer_address")
+    await trx("customer_address")
       .update({
         selected: true,
       })
       .where("address_id", addressId);
-    await knexConnection("customer_address")
+    await trx("customer_address")
       .update({ selected: false })
       .where("customer_id", customerId)
       .andWhereNot("address_id", addressId);
-    return result;
+    return true;
   } catch (error) {
     throw new Error(error.message);
   }
