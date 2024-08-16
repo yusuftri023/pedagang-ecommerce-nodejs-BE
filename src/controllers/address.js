@@ -35,15 +35,16 @@ export const customerAddress = async (req, res) => {
 
 export const addCustomerAddress = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { address_line, city, region, postal_code } = req.body;
+  const { address_line, city, region, postal_code, recipient } = req.body;
   try {
-    if (address_line && city && region && postal_code) {
+    if (address_line && city && region && postal_code && recipient) {
       await insertCustomerAdress(
         customerId,
         address_line,
         city,
         region,
-        postal_code
+        postal_code,
+        recipient
       );
       return res.status(201).json({
         success: true,
