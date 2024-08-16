@@ -25,13 +25,16 @@ export const insertCustomerAdress = async (
 ) => {
   const trx = await knexConnection.transaction();
   try {
-    const [addressId] = await trx("address_detail").insert({
-      address_line,
-      city,
-      region,
-      postal_code,
-      recipient,
-    });
+    const [address] = await trx("address_detail")
+      .insert({
+        address_line,
+        city,
+        region,
+        postal_code,
+        recipient,
+      })
+      .returning("id");
+    const addressId = address.id;
     await trx("customer_address").insert({
       customer_id: customerId,
       address_id: addressId,
