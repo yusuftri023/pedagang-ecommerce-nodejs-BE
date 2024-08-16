@@ -76,6 +76,7 @@ export const selectAddress = async (addressId, customerId) => {
       .update({ selected: 0 })
       .where("customer_id", customerId)
       .andWhereNot("address_id", addressId);
+    await trx.commit();
     return true;
   } catch (error) {
     throw new Error(error.message);
