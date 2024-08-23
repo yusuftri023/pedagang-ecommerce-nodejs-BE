@@ -66,8 +66,8 @@ export const showProductReview = async (productId) => {
         "pc.id as product_config_id",
         "vo.value as variation_value",
         "v.name as variation_name",
-        "c.username as customer_name",
-        "c.picture as customer_picture",
+        "u.username as customer_name",
+        "u.picture as customer_picture",
         "r.comment as comment",
         "r.rating as rating",
         "r.date as date"
@@ -76,7 +76,7 @@ export const showProductReview = async (productId) => {
       .join("variation_option as vo", "vo.id", "pc.variation_option_id")
       .join("variation as v", "v.id", "vo.variation_id")
       .join("review as r", "r.product_config_id", "pc.id")
-      .join("customer as c", "c.id", "r.customer_id")
+      .join("users as u", "u.id", "r.customer_id")
       .where("pc.product_id", productId);
     return result;
   } catch (error) {

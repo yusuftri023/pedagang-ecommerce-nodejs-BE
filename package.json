@@ -1,7 +1,7 @@
 {
   "name": "pedagang-ecommerce-nodejs-BE",
   "version": "1.0.0",
-  "description": "tugas individu HMS API",
+  "description": "back end for pedagang ecommerce",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "node src/index.js",
     "build": "node src/index.js"
   },
-  "author": "Yusuf, Rifky, Malik, Viqi",
+  "author": "Yusuf Trihartono Tonapa",
   "license": "MIT",
   "devDependencies": {
     "eslint": "latest",
@@ -24,6 +24,7 @@
     "bcrypt": "latest",
     "cookie-parser": "^1.4.6",
     "cors": "latest",
+    "cron": "^3.1.7",
     "dotenv": "latest",
     "express": "latest",
     "imagekit": "latest",

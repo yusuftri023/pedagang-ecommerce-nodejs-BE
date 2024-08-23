@@ -2,7 +2,7 @@ import { knexConnection } from "../database/config.js";
 
 export const userDataByEmail = async (email) => {
   try {
-    const result = await knexConnection.from("customer").where("email", email);
+    const result = await knexConnection.from("users").where("email", email);
     return result[0];
   } catch (error) {
     throw new Error(error.message);
@@ -16,7 +16,7 @@ export const insertCustomer = async (
   picture = "https://ik.imagekit.io/neuros123/default-profile-pic.png"
 ) => {
   try {
-    const result = await knexConnection("customer").insert([
+    const result = await knexConnection("users").insert([
       {
         username,
         email,
@@ -39,7 +39,7 @@ export const upsertGoogle = async (
 ) => {
   try {
     verified_email = verified_email === true ? 1 : 0;
-    const result = await knexConnection("customer")
+    const result = await knexConnection("users")
       .insert({
         email,
         verified: verified_email,
@@ -58,7 +58,7 @@ export const upsertGoogle = async (
 };
 export const updatePassword = async (password, email) => {
   try {
-    const result = await knexConnection("customer")
+    const result = await knexConnection("users")
       .update({
         password,
         last_password_update: new Date(),
@@ -72,7 +72,7 @@ export const updatePassword = async (password, email) => {
 };
 export const updatePicture = async (picture, email) => {
   try {
-    await knexConnection("customer")
+    await knexConnection("users")
       .update({
         picture,
       })
@@ -85,7 +85,7 @@ export const updatePicture = async (picture, email) => {
 };
 export const deleteCustomerDb = async (id) => {
   try {
-    const result = await knexConnection("customer").delete().where("id", id);
+    const result = await knexConnection("users").delete().where("id", id);
     return result;
   } catch (error) {
     throw new Error(error.message);

@@ -78,7 +78,6 @@ export const insertWishlist = async (
 export const deleteWishlistEntry = async (id) => {
   try {
     await knexConnection("wishlist").delete().where("id", id);
-
     return true;
   } catch (error) {
     throw new Error(error.message);

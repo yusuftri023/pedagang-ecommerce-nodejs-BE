@@ -4,7 +4,7 @@ export const findCustomerAddress = async (customerId) => {
   try {
     const result = await knexConnection
       .from("customer_address as ca")
-      .join("customer as c", "c.id", "ca.customer_id")
+      .join("users as u", "u.id", "ca.customer_id")
       .join("address_detail as ad", "ad.id", "ca.address_id")
       .select("ca.*", "ad.*")
       .where("ca.customer_id", customerId);

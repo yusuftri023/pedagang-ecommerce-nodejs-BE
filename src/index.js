@@ -6,6 +6,7 @@ import "dotenv/config";
 import router from "./routes/router.js";
 import logger from "./middlewares/logger.js";
 import cookieParser from "cookie-parser";
+import { job, jobCron, schedulerJob } from "./utils/cronJob.js";
 
 const app = express();
 const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
@@ -50,6 +51,7 @@ app.use("*", (req, res) => {
 app.listen(SERVER_PORT || 8080, () => {
   console.log(`Server is currently running`);
 });
+schedulerJob.start();
 // https.createServer(options, app).listen(SERVER_PORT || 8080, () => {
 //   console.log(`Server Running at 127.0.0.1:${SERVER_PORT || 8080}`);
 // });
