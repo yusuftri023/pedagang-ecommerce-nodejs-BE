@@ -19,7 +19,7 @@ const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const corsAllowedOrigin = [
-  // "https://127.0.0.1:5173",
+  "https://127.0.0.1:5173",
   // "https://127.0.0.1:8080",
   // `https://${FRONT_END_DOMAIN}:5173`,
   `https://${FRONT_END_DOMAIN}`,
