@@ -6,7 +6,7 @@ import "dotenv/config";
 import router from "./routes/router.js";
 import logger from "./middlewares/logger.js";
 import cookieParser from "cookie-parser";
-import { job, jobCron, schedulerJob } from "./utils/cronJob.js";
+import { schedulerJob } from "./utils/cronJob.js";
 
 const app = express();
 const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
