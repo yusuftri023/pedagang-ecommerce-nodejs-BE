@@ -8,7 +8,14 @@ const imagekit = new ImageKit({
   privateKey: IMAGEKIT_SECRET_KEY,
   urlEndpoint: IMAGEKIT_URL_ENDPOINT,
 });
-
+export const imagekitTokenizer = async (req, res, next) => {
+  try {
+    const authenticationParameters = imagekit.getAuthenticationParameters();
+    res.status(200).json({ success: true, data: authenticationParameters });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 export const imagekitUpload = async (req, res, next) => {
   try {
     const resizeImage = await sharp(req.file.buffer)
@@ -34,6 +41,6 @@ export const imagekitUpload = async (req, res, next) => {
     req.uploadImage = uploadImage;
     next();
   } catch (error) {
-    res.send(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };

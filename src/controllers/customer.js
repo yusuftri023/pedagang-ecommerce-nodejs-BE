@@ -366,3 +366,29 @@ export const deleteCustomer = async (req, res) => {
     });
   }
 };
+export const adminDeleteCustomer = async (req, res) => {
+  const { email, accountId } = req.body;
+  try {
+    const data = await userDataByEmail(email);
+    if (data) {
+      await deleteCustomerDb(accountId);
+      return res.status(200).json({
+        success: true,
+        message: "Account deleted",
+        data: null,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Account does not exist",
+        data: null,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};

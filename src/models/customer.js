@@ -2,7 +2,12 @@ import { knexConnection } from "../database/config.js";
 
 export const userDataByEmail = async (email) => {
   try {
-    const result = await knexConnection.from("users").where("email", email);
+    const result = await knexConnection
+      .select("u.*", "r.name as role")
+      .join("user_role as ur", "ur.user_id", "u.id")
+      .join("role as r", "ur.role_id", "r.id")
+      .from("users as u")
+      .where("email", email);
     return result[0];
   } catch (error) {
     throw new Error(error.message);

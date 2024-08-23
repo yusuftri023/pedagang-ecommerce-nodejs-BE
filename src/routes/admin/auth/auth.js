@@ -1,16 +1,8 @@
 import express from "express";
-import {
-  generateGoogleLoginURL,
-  googleLogin,
-  login,
-  logout,
-  register,
-} from "../../controllers/customer.js";
-import { auth } from "../../middlewares/authJWT.js";
-
+import { auth } from "../../../middlewares/authJWT.js";
+import { login, logout } from "../../../controllers/customer.js";
 const router = express.Router();
 
-router.post("/register", register);
 router.post("/login", login);
 router.get("/logout", auth, logout);
 router.get("/refresh", auth, (req, res) => {
@@ -20,6 +12,4 @@ router.get("/refresh", auth, (req, res) => {
     data: req.decodedToken,
   });
 });
-router.get("/google", generateGoogleLoginURL);
-router.get("/google/callback", googleLogin);
 export default router;

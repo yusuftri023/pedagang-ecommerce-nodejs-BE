@@ -18,16 +18,16 @@ const { SERVER_PORT, SIGNED_COOKIE_SECRET, FRONT_END_DOMAIN } = process.env;
 // };
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+const corsAllowedOrigin = [
+  // "https://127.0.0.1:5173",
+  // "https://127.0.0.1:8080",
+  // `https://${FRONT_END_DOMAIN}:5173`,
+  `https://${FRONT_END_DOMAIN}`,
+  "https://pedagang-ecommerce.onrender.com",
+];
 app.use(
   cors({
-    origin: [
-      "https://127.0.0.1:5173",
-      "https://127.0.0.1:8080",
-      // `https://${FRONT_END_DOMAIN}:5173`,
-      `https://${FRONT_END_DOMAIN}`,
-      "https://pedagang-ecommerce.onrender.com",
-    ],
+    origin: corsAllowedOrigin,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
@@ -35,10 +35,10 @@ app.use(
 app.use(cookieParser(SIGNED_COOKIE_SECRET));
 app.use(logger);
 app.use("/", router);
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   return res.json({
     status: "success",
-    message: "Welcome to HMS-Individual-API-Project",
+    message: "Welcome to Ecommerce Backend API",
   });
 });
 app.use("*", (req, res) => {
