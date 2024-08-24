@@ -13,6 +13,19 @@ export const userDataByEmail = async (email) => {
     throw new Error(error.message);
   }
 };
+export const userDataById = async (id) => {
+  try {
+    const result = await knexConnection
+      .select("u.*", "r.name as role")
+      .join("user_role as ur", "ur.user_id", "u.id")
+      .join("role as r", "ur.role_id", "r.id")
+      .from("users as u")
+      .where("u.id", id);
+    return result[0];
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 export const insertCustomer = async (
   username,
   email,
@@ -56,6 +69,26 @@ export const upsertGoogle = async (
       })
       .onConflict("email")
       .merge({ google_id, verified: verified_email });
+    return result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const updateUserProfile = async (
+  user_id,
+  email,
+  phone_number,
+  username
+) => {
+  try {
+    const result = await knexConnection("users")
+      .update({
+        username,
+        email,
+        phone_number,
+      })
+      .where("id", user_id);
+
     return result;
   } catch (error) {
     throw new Error(error.message);

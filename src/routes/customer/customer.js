@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   changePicture,
+  changeProfile,
   changepassword,
   customer,
   deleteCustomer,
@@ -29,6 +30,7 @@ router.use("/promotion", promotionRouter);
 router.use("/variation", variationRouter);
 
 router.get("/profile", customer);
+router.patch("/change-profile", changeProfile);
 router.patch(
   "/changepicture",
   imageUpload.single("image"),

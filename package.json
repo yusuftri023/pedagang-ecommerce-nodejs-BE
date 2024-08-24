@@ -1,5 +1,5 @@
 {
-  "name": "pedagang-ecommerce-nodejs-BE",
+  "name": "pedagang_ecommerce_nodejs_be",
   "version": "1.0.0",
   "description": "back end for pedagang ecommerce",
   "main": "src/index.js",

@@ -8,8 +8,10 @@ import {
   insertCustomer,
   updatePassword,
   updatePicture,
+  updateUserProfile,
   upsertGoogle,
   userDataByEmail,
+  userDataById,
 } from "../models/customer.js";
 import {
   checkBcrypt,
@@ -323,6 +325,33 @@ export const changepassword = async (req, res) => {
           data: null,
         });
       }
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Customer does not exist",
+        data: null,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+export const changeProfile = async (req, res) => {
+  try {
+    const { id: idToken } = req.decodedToken;
+    const { email, phone_number, username } = req.body;
+    const data = await userDataById(idToken);
+    if (data) {
+      await updateUserProfile(idToken, email, phone_number, username);
+      return res.status(201).json({
+        success: true,
+        message: "Password updated successfully",
+        data: null,
+      });
     } else {
       return res.status(404).json({
         success: false,

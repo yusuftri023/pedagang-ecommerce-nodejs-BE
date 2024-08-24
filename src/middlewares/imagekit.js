@@ -26,7 +26,7 @@ export const imagekitUpload = async (req, res, next) => {
     const date = new Date();
     const formattedTime = Intl.DateTimeFormat("sv-SE").format(date);
     const currentTime = date.getTime();
-    console.time("uploading to imagekit");
+
     await imagekit.createFolder({
       folderName: `${formattedTime}`,
       parentFolderPath: "/Ecommerce-Pedagang/profile-picture",
@@ -37,7 +37,7 @@ export const imagekitUpload = async (req, res, next) => {
       file: stringFile,
       folder: `/Ecommerce-Pedagang/profile-picture/${formattedTime}`,
     });
-    console.timeEnd("uploading to imagekit");
+
     req.uploadImage = uploadImage;
     next();
   } catch (error) {
