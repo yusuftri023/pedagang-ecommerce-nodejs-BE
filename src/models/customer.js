@@ -78,7 +78,8 @@ export const updateUserProfile = async (
   user_id,
   email,
   phone_number,
-  username
+  username,
+  verified
 ) => {
   try {
     const result = await knexConnection("users")
@@ -86,6 +87,7 @@ export const updateUserProfile = async (
         username,
         email,
         phone_number,
+        verified,
       })
       .where("id", user_id);
 

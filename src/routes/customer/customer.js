@@ -31,13 +31,8 @@ router.use("/variation", variationRouter);
 
 router.get("/profile", customer);
 router.patch("/change-profile", changeProfile);
-router.patch(
-  "/changepicture",
-  imageUpload.single("image"),
-  imagekitUpload,
-  changePicture
-);
-router.patch("/changepassword", changepassword);
+router.patch("/change-picture", changePicture);
+router.patch("/change-password", changepassword);
 router.delete("/delete", deleteCustomer);
 
 export default router;

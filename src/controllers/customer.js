@@ -275,8 +275,8 @@ export const googleLogin = async (req, res) => {
   }
 };
 export const changePicture = async (req, res) => {
-  const { url } = req.uploadImage;
-  const { id: idToken, email: emailToken } = req.decodedToken;
+  const { url } = req.body;
+  const { email: emailToken } = req.decodedToken;
   try {
     const data = await userDataByEmail(emailToken);
     if (data) {
@@ -303,14 +303,17 @@ export const changePicture = async (req, res) => {
 };
 export const changepassword = async (req, res) => {
   const { id: idToken, email: emailToken } = req.decodedToken;
-  const { password } = req.body;
+  const { new_password, current_password } = req.body;
 
   try {
     const data = await userDataByEmail(emailToken);
-
-    if (data) {
-      const isMatched = await checkBcrypt(password, data.password);
-      if (!isMatched) {
+    const isCorrectPassword = await checkBcrypt(
+      current_password,
+      data.password
+    );
+    if (isCorrectPassword) {
+      const isNewAndOldMatched = await checkBcrypt(new_password, data.password);
+      if (!isNewAndOldMatched) {
         const hashedPassword = await hashPassword(password);
         await updatePassword(hashedPassword, data.email);
         return res.status(201).json({
@@ -328,7 +331,7 @@ export const changepassword = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "Customer does not exist",
+        message: "Password is invalid",
         data: null,
       });
     }
@@ -345,11 +348,12 @@ export const changeProfile = async (req, res) => {
     const { id: idToken } = req.decodedToken;
     const { email, phone_number, username } = req.body;
     const data = await userDataById(idToken);
+    const verified = data.email === email ? data.verified : 0;
     if (data) {
-      await updateUserProfile(idToken, email, phone_number, username);
+      await updateUserProfile(idToken, email, phone_number, username, verified);
       return res.status(201).json({
         success: true,
-        message: "Password updated successfully",
+        message: "Profile updated successfully",
         data: null,
       });
     } else {
