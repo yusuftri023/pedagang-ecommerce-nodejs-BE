@@ -1,4 +1,5 @@
 import {
+  decreaseProductStock,
   deleteProductEntry,
   insertProduct,
   showAllProduct,
@@ -197,6 +198,25 @@ export const addProduct = async (req, res) => {
   }
 };
 
+export const updateProductInTransaction = async (req, res) => {
+  const { items } = req.body;
+  try {
+    items.forEach(async (item) => {
+      await decreaseProductStock(item.product_config_id, item.quantity);
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Product stock decreased",
+      data: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
 export const deleteProduct = async (req, res) => {
   const { productId } = req.params;
   try {

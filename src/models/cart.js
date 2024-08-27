@@ -16,6 +16,7 @@ export const cartData = async (customerId) => {
         "pc.stock",
         "pc.variation_option_id",
         "pc.price",
+        "pc.discount",
         "pc.id as product_config_id",
         "vo.value as variation_value",
         "v.name as variation_name"
@@ -25,7 +26,7 @@ export const cartData = async (customerId) => {
       .join("variation_option as vo", "vo.id", "pc.variation_option_id")
       .join("variation as v", "v.id", "vo.variation_id")
       .join("category as ca", "ca.id", "p.category_id")
-      .where("customer_id", customerId);
+      .where("c.customer_id", customerId);
 
     return result;
   } catch (error) {

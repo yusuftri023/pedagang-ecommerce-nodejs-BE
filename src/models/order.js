@@ -11,14 +11,19 @@ const order_statuses = [
   "Pesanan Dibatalkan",
 ];
 
-export const orderItemsList = async (orderId, customerId) => {
+export const orderItemsList = async (orderId) => {
   try {
     const result = await knexConnection
-      .from("order_detail as od")
-      .join("order_item as oi", "oi.order_id", "od.id")
-      .where("order_id", orderId)
-      .andWhere("customer_id", customerId);
-    return result.length > 0 ? JSON.parse(JSON.stringify(result[0])) : result;
+      .select(
+        "od.id as order_id",
+        "oi.quantity as quantity",
+        "oi.note as note",
+        "oi.product_config as product_config"
+      )
+      .from("order_item as oi")
+      .join("order_detail as od", "od.id", "oi.order_id")
+      .where("od.id", orderId);
+    return result;
   } catch (error) {
     throw new Error(error.message);
   }

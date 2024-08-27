@@ -1,4 +1,5 @@
-import { updateStatusOrder } from "../models/order.js";
+import { orderItemsList, updateStatusOrder } from "../models/order.js";
+import { increaseProductStock } from "../models/product.js";
 import { apiClient } from "../utils/midtrans.js";
 
 export const midtransTransactionNotification = async (req, res) => {
@@ -29,6 +30,10 @@ export const midtransTransactionNotification = async (req, res) => {
       transactionStatus == "expire"
     ) {
       await updateStatusOrder(orderId, transaction_id, "Pesanan Dibatalkan");
+      const canceledProduct = await orderItemsList(orderId);
+      canceledProduct.forEach(async (item) => {
+        await increaseProductStock(item.product_config, item.quantity);
+      });
     } else if (transactionStatus == "pending") {
       await updateStatusOrder(orderId, transaction_id, "Menunggu Pembayaran");
     }

@@ -158,6 +158,35 @@ export const insertProduct = async (
     throw new Error(error.message);
   }
 };
+
+export const increaseProductStock = async (productConfigId, quantity) => {
+  try {
+    const [productConfig] = await knexConnection("product_config").where(
+      "id",
+      productConfigId
+    );
+    await knexConnection("product_config")
+      .update({ stock: Number(productConfig.stock) + Number(quantity) })
+      .where("id", productId);
+    return true;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const decreaseProductStock = async (productConfigId, quantity) => {
+  try {
+    const [productConfig] = await knexConnection("product_config").where(
+      "id",
+      productConfigId
+    );
+    await knexConnection("product_config")
+      .update({ stock: Number(productConfig.stock) - Number(quantity) })
+      .where("id", productId);
+    return true;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 export const deleteProductEntry = async (productId) => {
   try {
     await knexConnection("product").delete().where("id", productId);
