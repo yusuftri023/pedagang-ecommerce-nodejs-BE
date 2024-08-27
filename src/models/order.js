@@ -18,11 +18,12 @@ export const orderItemsList = async (orderId) => {
         "od.id as order_id",
         "oi.quantity as quantity",
         "oi.note as note",
-        "oi.product_config as product_config"
+        "oi.product_config_id as product_config_id"
       )
       .from("order_item as oi")
       .join("order_detail as od", "od.id", "oi.order_id")
       .where("od.id", orderId);
+
     return result;
   } catch (error) {
     throw new Error(error.message);

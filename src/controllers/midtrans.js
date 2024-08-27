@@ -1,5 +1,8 @@
 import { orderItemsList, updateStatusOrder } from "../models/order.js";
-import { increaseProductStock } from "../models/product.js";
+import {
+  decreaseProductStock,
+  increaseProductStock,
+} from "../models/product.js";
 import { apiClient } from "../utils/midtrans.js";
 
 export const midtransTransactionNotification = async (req, res) => {
@@ -13,7 +16,7 @@ export const midtransTransactionNotification = async (req, res) => {
       transaction_status: transactionStatus,
       fraud_status: fraudStatus,
     } = statusResponse;
-
+    console.log(statusResponse);
     console.log(
       `Transaction notification received. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`
     );
@@ -35,6 +38,10 @@ export const midtransTransactionNotification = async (req, res) => {
         await increaseProductStock(item.product_config, item.quantity);
       });
     } else if (transactionStatus == "pending") {
+      const boughtProduct = await orderItemsList(orderId);
+      boughtProduct.forEach(async (item) => {
+        await decreaseProductStock(item.product_config, item.quantity);
+      });
       await updateStatusOrder(orderId, transaction_id, "Menunggu Pembayaran");
     }
 
