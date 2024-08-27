@@ -6,7 +6,6 @@ import {
   updateTokenOrder,
 } from "../models/order.js";
 import { midtransCreateTransaction } from "../utils/midtrans.js";
-import { customer } from "./customer.js";
 
 export const customerOrderItemsList = async (req, res) => {
   const { id: customerId } = req.decodedToken;
