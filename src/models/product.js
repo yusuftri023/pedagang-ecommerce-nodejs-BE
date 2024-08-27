@@ -163,7 +163,7 @@ export const increaseProductStock = async (productConfigId, quantity) => {
   try {
     const [productConfig] = await knexConnection("product_config as pc")
       .select("pc.stock as stock")
-      .where("id", productConfigId);
+      .where("pc.id", productConfigId);
     await knexConnection("product_config")
       .update({ stock: Number(productConfig.stock) + Number(quantity) })
       .where("id", productId);
@@ -176,7 +176,7 @@ export const decreaseProductStock = async (productConfigId, quantity) => {
   try {
     const [productConfig] = await knexConnection("product_config as pc")
       .select("pc.stock as stock")
-      .where("id", productConfigId);
+      .where("pc.id", productConfigId);
     await knexConnection("product_config")
       .update({ stock: Number(productConfig.stock) - Number(quantity) })
       .where("id", productConfigId);
