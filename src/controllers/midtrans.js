@@ -39,6 +39,7 @@ export const midtransTransactionNotification = async (req, res) => {
       });
     } else if (transactionStatus == "pending") {
       const boughtProduct = await orderItemsList(orderId);
+      console.log(boughtProduct);
       boughtProduct.forEach(async (item) => {
         await decreaseProductStock(item.product_config, item.quantity);
       });
