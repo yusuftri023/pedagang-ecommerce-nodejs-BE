@@ -34,14 +34,14 @@ export const midtransTransactionNotification = async (req, res) => {
     ) {
       await updateStatusOrder(orderId, transaction_id, "Pesanan Dibatalkan");
       const canceledProduct = await orderItemsList(orderId);
-      canceledProduct.forEach(async (item) => {
-        await increaseProductStock(item.product_config, item.quantity);
+      canceledProduct.forEach(async ({ product_config_id, quantity }) => {
+        await increaseProductStock(product_config_id, quantity);
       });
     } else if (transactionStatus == "pending") {
       const boughtProduct = await orderItemsList(orderId);
       console.log(boughtProduct);
-      boughtProduct.forEach(async (item) => {
-        await decreaseProductStock(item.product_config, item.quantity);
+      boughtProduct.forEach(async ({ product_config_id, quantity }) => {
+        await decreaseProductStock(product_config_id, quantity);
       });
       await updateStatusOrder(orderId, transaction_id, "Menunggu Pembayaran");
     }
