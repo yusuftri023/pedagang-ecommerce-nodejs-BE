@@ -16,7 +16,6 @@ export const midtransTransactionNotification = async (req, res) => {
       transaction_status: transactionStatus,
       fraud_status: fraudStatus,
     } = statusResponse;
-    console.log(statusResponse);
     console.log(
       `Transaction notification received. Order ID: ${orderId}. Transaction status: ${transactionStatus}. Fraud status: ${fraudStatus}`
     );
@@ -39,7 +38,6 @@ export const midtransTransactionNotification = async (req, res) => {
       });
     } else if (transactionStatus == "pending") {
       const boughtProduct = await orderItemsList(orderId);
-      console.log(boughtProduct);
       boughtProduct.forEach(async ({ product_config_id, quantity }) => {
         await decreaseProductStock(product_config_id, quantity);
       });

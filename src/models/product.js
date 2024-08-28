@@ -174,7 +174,6 @@ export const increaseProductStock = async (productConfigId, quantity) => {
 };
 export const decreaseProductStock = async (productConfigId, quantity) => {
   try {
-    console.log(productConfigId, quantity);
     const [productConfig] = await knexConnection("product_config")
       .select("stock")
       .where("id", productConfigId);
