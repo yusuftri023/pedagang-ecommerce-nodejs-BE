@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.use("/address", addressRouter);
 router.use("/cart", cartRouter);
-router.use("/order", orderRouter);
+router.use("/orders", orderRouter);
 router.use("/wishlist", wishlistRouter);
 router.use("/payment", paymentRouter);
 router.use("/category", categoryRouter);

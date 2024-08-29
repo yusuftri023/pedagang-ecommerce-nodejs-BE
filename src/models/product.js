@@ -166,7 +166,7 @@ export const increaseProductStock = async (productConfigId, quantity) => {
       .where("id", productConfigId);
     await knexConnection("product_config")
       .update({ stock: Number(productConfig.stock) + Number(quantity) })
-      .where("id", productId);
+      .where("id", productConfigId);
     return true;
   } catch (error) {
     throw new Error(error.message);

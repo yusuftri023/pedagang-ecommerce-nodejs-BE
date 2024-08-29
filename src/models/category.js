@@ -4,7 +4,7 @@ export const showCategory = async () => {
   try {
     const result = await knexConnection.from("category");
 
-    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
+    return result.length > 0 ? result : false;
   } catch (error) {
     throw new Error(error.message);
   }

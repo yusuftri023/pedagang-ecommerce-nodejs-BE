@@ -12,7 +12,7 @@ export const allCategory = async (req, res) => {
     } else {
       return res.status(404).json({
         success: false,
-        message: "Product categories does not exist",
+        message: "There is no category yet",
         data: null,
       });
     }
