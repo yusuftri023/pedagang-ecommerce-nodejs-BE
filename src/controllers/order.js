@@ -79,19 +79,20 @@ export const createOrder = async (req, res) => {
         payment_method_id
       );
       const customer_details = await userDataByEmail(emailToken);
-      const result = await midtransCreateTransaction(
+      const token = await midtransCreateTransaction(
         orderId,
         order_list,
         customer_details,
         shipping_cost,
         discount
       );
+      await updateTokenOrder(orderId, customerId, token);
       return res.status(201).json({
         success: true,
         message: "Order successfully created",
         data: {
           order_id: orderId,
-          token: result,
+          token: token,
         },
       });
     } else {
