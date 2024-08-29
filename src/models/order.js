@@ -29,11 +29,19 @@ export const orderItemsList = async (orderId) => {
     throw new Error(error.message);
   }
 };
-export const allCustomerOrders = async (customerId, page = 1, limit = 10) => {
+export const allCustomerOrders = async (
+  customerId,
+  page = 1,
+  limit = 10,
+  orderBy = "order_date",
+  orderDir = "desc"
+) => {
   try {
+    const order = [{ column: orderBy, order: orderDir }];
     const result = await knexConnection
       .from("order_detail")
       .where("customer_id", customerId)
+      .orderBy(order)
       .offset((page - 1) * limit)
       .limit(limit);
     return result.length > 0 ? JSON.parse(JSON.stringify(result)) : result;

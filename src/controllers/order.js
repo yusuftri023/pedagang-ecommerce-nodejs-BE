@@ -36,9 +36,15 @@ export const customerOrderItemsList = async (req, res) => {
 };
 export const customerOrders = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { page, limit } = req.query;
+  const { page, limit, order_by, order_dir } = req.query;
   try {
-    const result = await allCustomerOrders(customerId, page, limit);
+    const result = await allCustomerOrders(
+      customerId,
+      page,
+      limit,
+      order_by,
+      order_dir
+    );
     if (result) {
       return res.status(200).json({
         success: true,
