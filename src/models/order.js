@@ -37,7 +37,10 @@ export const allCustomerOrders = async (
   orderDir = "desc"
 ) => {
   try {
-    const order = [{ column: orderBy, order: orderDir }];
+    const order = [
+      { column: orderBy, order: orderDir },
+      { column: "id", order: "desc" },
+    ];
     const result = await knexConnection
       .from("order_detail")
       .where("customer_id", customerId)
