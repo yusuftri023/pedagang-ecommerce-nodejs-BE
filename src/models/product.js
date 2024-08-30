@@ -1,6 +1,7 @@
 import { knexConnection } from "../database/config.js";
 
-export const showSearchProduct = async (keyword, category_id) => {
+export const showSearchProduct = async (keyword, category_id = "All") => {
+  console.log(category_id);
   try {
     let result;
     if (category_id === "All") {
@@ -29,11 +30,11 @@ export const showSearchProduct = async (keyword, category_id) => {
           "v.name as variation_name"
         )
         .join("product_config as pc", "pc.product_id", "p.id")
+        .join("category as ca", "ca.id", "p.category_id")
         .join("variation_option as vo", "vo.id", "pc.variation_option_id")
         .join("variation as v", "v.id", "vo.variation_id")
-        .join("category as ca", "ca.id", "p.category_id")
         .where("p.title", "ilike", `%${keyword}%`)
-        .andWhere("ca.id", category_id);
+        .andWhere("p.category_id", "=", category_id);
     }
 
     return result;
