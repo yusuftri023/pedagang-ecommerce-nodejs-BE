@@ -36,9 +36,9 @@ export const allProduct = async (req, res) => {
 };
 export const searchProduct = async (req, res) => {
   try {
-    const { keyword } = req.query;
+    const { keyword, category_id } = req.query;
 
-    const result = await showSearchProduct(keyword);
+    const result = await showSearchProduct(keyword, category_id);
     return res.status(200).json({
       success: true,
       message: "Data Fetch success",
