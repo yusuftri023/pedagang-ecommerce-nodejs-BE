@@ -1,6 +1,7 @@
 import { userDataByEmail } from "../models/customer.js";
 import {
   allCustomerOrders,
+  allCustomerOrdersCount,
   insertOrder,
   orderItemsList,
   updateTokenOrder,
@@ -45,11 +46,13 @@ export const customerOrders = async (req, res) => {
       order_by,
       order_dir
     );
+    const total_count = await allCustomerOrdersCount(customerId);
     if (result) {
       return res.status(200).json({
         success: true,
         message: "Data Fetch success",
         data: result,
+        total_count,
       });
     } else {
       return res.status(404).json({

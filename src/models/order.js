@@ -15,15 +15,24 @@ export const orderItemsList = async (orderId) => {
   try {
     const result = await knexConnection
       .select(
-        "od.id as order_id",
         "oi.quantity as quantity",
         "oi.note as note",
-        "oi.product_config_id as product_config_id"
+        "oi.product_config_id as product_config_id",
+        "pc.price as price",
+        "pc.discount as discount",
+        "p.title as product_title",
+        "p.image as product_image",
+        "ca.name as category_name",
+        "vo.value as variation_value",
+        "v.name as variation_name"
       )
       .from("order_item as oi")
-      .join("order_detail as od", "od.id", "oi.order_id")
-      .where("od.id", orderId);
-
+      .join("product_config as pc", "pc.id", "oi.product_config_id")
+      .join("product as p", "p.id", "pc.product_id")
+      .join("category as ca", "ca.id", "p.category_id")
+      .join("variation_option as vo", "vo.id", "pc.variation_option_id")
+      .join("variation as v", "v.id", "vo.variation_id")
+      .where("oi.order_id", orderId);
     return result;
   } catch (error) {
     throw new Error(error.message);
@@ -48,6 +57,18 @@ export const allCustomerOrders = async (
       .offset((page - 1) * limit)
       .limit(limit);
     return result.length > 0 ? JSON.parse(JSON.stringify(result)) : result;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const allCustomerOrdersCount = async (customerId) => {
+  try {
+    const [result] = await knexConnection
+      .from("order_detail")
+      .where("customer_id", customerId)
+      .count("id as total");
+
+    return result;
   } catch (error) {
     throw new Error(error.message);
   }
