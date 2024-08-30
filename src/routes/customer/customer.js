@@ -15,6 +15,7 @@ import paymentRouter from "./payment/payment.js";
 import categoryRouter from "./category/category.js";
 import promotionRouter from "./promotion/promotion.js";
 import variationRouter from "./variation/variation.js";
+import shipmentRouter from "./shipment/shipment.js";
 // import productRouter from "./product/product.js";
 const router = express.Router();
 
@@ -26,6 +27,7 @@ router.use("/payment", paymentRouter);
 router.use("/category", categoryRouter);
 router.use("/promotion", promotionRouter);
 router.use("/variation", variationRouter);
+router.use("/shipments", shipmentRouter);
 // router.use("/product", productRouter);
 
 router.get("/profile", customer);
