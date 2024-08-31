@@ -18,9 +18,9 @@ export const customerAddress = async (req, res) => {
         data: result,
       });
     } else {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
-        message: "Customer address does not exist",
+        message: "Customer address is empty",
         data: null,
       });
     }
@@ -35,16 +35,25 @@ export const customerAddress = async (req, res) => {
 
 export const addCustomerAddress = async (req, res) => {
   const { id: customerId } = req.decodedToken;
-  const { address_line, city, region, postal_code, recipient } = req.body;
+  const { address_line, city, region, postal_code, recipient, destination_id } =
+    req.body;
   try {
-    if (address_line && city && region && postal_code && recipient) {
+    if (
+      address_line &&
+      city &&
+      region &&
+      postal_code &&
+      recipient &&
+      destination_id
+    ) {
       await insertCustomerAdress(
         customerId,
         address_line,
         city,
         region,
         postal_code,
-        recipient
+        recipient,
+        destination_id
       );
       return res.status(201).json({
         success: true,
@@ -68,12 +77,25 @@ export const addCustomerAddress = async (req, res) => {
 };
 
 export const changeAddressDetails = async (req, res) => {
-  const { id: customerId } = req.decodedToken;
-  const { address_line, city, region, postal_code } = req.body;
+  const { address_line, city, region, postal_code, destination_id } = req.body;
   const { addressId } = req.params;
   try {
-    if (address_line && city && region && postal_code && addressId) {
-      await updateAddress(addressId, address_line, city, region, postal_code);
+    if (
+      address_line &&
+      city &&
+      region &&
+      postal_code &&
+      addressId &&
+      destination_id
+    ) {
+      await updateAddress(
+        addressId,
+        address_line,
+        city,
+        region,
+        postal_code,
+        destination_id
+      );
       return res.status(201).json({
         success: true,
         message: "Address successfully updated",

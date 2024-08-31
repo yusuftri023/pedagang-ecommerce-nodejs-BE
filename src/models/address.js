@@ -9,7 +9,7 @@ export const findCustomerAddress = async (customerId) => {
       .select("ca.*", "ad.*")
       .where("ca.customer_id", customerId);
 
-    return result.length > 0 ? JSON.parse(JSON.stringify(result)) : false;
+    return result.length > 0 ? result : false;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -21,6 +21,7 @@ export const insertCustomerAdress = async (
   region,
   postal_code,
   recipient,
+  destination_id,
   selected = 0
 ) => {
   const trx = await knexConnection.transaction();
@@ -32,6 +33,7 @@ export const insertCustomerAdress = async (
         region,
         postal_code,
         recipient,
+        destination_id,
       })
       .returning("id");
     const addressId = address.id;
@@ -52,7 +54,8 @@ export const updateAddress = async (
   address_line,
   city,
   region,
-  postal_code
+  postal_code,
+  destination_id
 ) => {
   try {
     const result = await knexConnection("address_detail")
@@ -61,6 +64,7 @@ export const updateAddress = async (
         city,
         region,
         postal_code,
+        destination_id,
       })
       .where("id", addressId);
 

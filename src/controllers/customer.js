@@ -314,7 +314,7 @@ export const changepassword = async (req, res) => {
     if (isCorrectPassword) {
       const isNewAndOldMatched = await checkBcrypt(new_password, data.password);
       if (!isNewAndOldMatched) {
-        const hashedPassword = await hashPassword(password);
+        const hashedPassword = await hashPassword(new_password);
         await updatePassword(hashedPassword, data.email);
         return res.status(201).json({
           success: true,

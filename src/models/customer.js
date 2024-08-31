@@ -4,9 +4,9 @@ export const userDataByEmail = async (email) => {
   try {
     const result = await knexConnection
       .select("u.*", "r.name as role")
+      .from("users as u")
       .join("user_role as ur", "ur.user_id", "u.id")
       .join("role as r", "ur.role_id", "r.id")
-      .from("users as u")
       .where("email", email);
     return result[0];
   } catch (error) {

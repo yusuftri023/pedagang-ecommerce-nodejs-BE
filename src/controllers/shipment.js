@@ -71,3 +71,34 @@ export const city = async (req, res) => {
     });
   }
 };
+export const shipmentCost = async (req, res) => {
+  try {
+    const { destination_id, weight, courier } = req.body;
+    const data = {
+      origin: "387",
+      destination: destination_id,
+      weight,
+      courier,
+    };
+    const result = await axios
+      .post(`https://api.rajaongkir.com/starter/cost`, data, {
+        headers: {
+          key: "fc047c1ff364a797b715979366c0c960",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((res) => res.data.rajaongkir.results)
+      .catch((err) => {
+        throw new Error(err.message);
+      });
+    return res
+      .status(200)
+      .json({ success: true, message: "success", data: result });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
