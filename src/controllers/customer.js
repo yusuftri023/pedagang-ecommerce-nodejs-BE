@@ -227,12 +227,18 @@ export const googleLogin = async (req, res) => {
       await getGoogleOAuthTokens({
         code,
       });
-    const { id, email, verified_email, name, picture } = await getGoogleUser({
+    const result = await getGoogleUser({
       id_token,
       access_token,
     });
-
-    await upsertGoogle(email, verified_email, name, picture, id);
+    console.log(result);
+    await upsertGoogle(
+      result.email,
+      result.verified_email,
+      result.name,
+      result.picture,
+      result.id
+    );
     const customerData = await userDataByEmail(email);
     const hashedRefreshToken = await hashRefreshToken(refresh_token);
 
