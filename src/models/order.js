@@ -33,7 +33,12 @@ export const orderItemsList = async (orderId) => {
       .join("variation_option as vo", "vo.id", "pc.variation_option_id")
       .join("variation as v", "v.id", "vo.variation_id")
       .where("oi.order_id", orderId);
-    return result;
+    return result.map((item) => {
+      return {
+        ...item,
+        product_image: item.product_image.split("+++"),
+      };
+    });
   } catch (error) {
     throw new Error(error.message);
   }

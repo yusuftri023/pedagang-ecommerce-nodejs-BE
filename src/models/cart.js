@@ -28,7 +28,12 @@ export const cartData = async (customerId) => {
       .join("category as ca", "ca.id", "p.category_id")
       .where("c.customer_id", customerId);
 
-    return result;
+    return result.map((item) => {
+      return {
+        ...item,
+        image: item.image.split("+++"),
+      };
+    });
   } catch (error) {
     throw new Error(error.message);
   }

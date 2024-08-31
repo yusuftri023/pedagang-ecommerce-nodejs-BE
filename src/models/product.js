@@ -1,7 +1,6 @@
 import { knexConnection } from "../database/config.js";
 
 export const showSearchProduct = async (keyword, category_id = "All") => {
-  console.log(category_id);
   try {
     let result;
     if (category_id === "All") {
@@ -37,7 +36,12 @@ export const showSearchProduct = async (keyword, category_id = "All") => {
         .andWhere("p.category_id", "=", category_id);
     }
 
-    return result;
+    return result.map((item) => {
+      return {
+        ...item,
+        image: item.image.split("+++"),
+      };
+    });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -48,7 +52,12 @@ export const showAllProduct = async () => {
       .from("product as p")
       .join("product_config as pc", "pc.product_id", "p.id");
 
-    return result;
+    return result.map((item) => {
+      return {
+        ...item,
+        image: item.image.split("+++"),
+      };
+    });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -72,7 +81,12 @@ export const showDetailProduct = async (productId) => {
       .join("variation as v", "v.id", "vo.variation_id")
       .where("pc.product_id", productId);
 
-    return result;
+    return result.map((item) => {
+      return {
+        ...item,
+        image: item.image.split("+++"),
+      };
+    });
   } catch (error) {
     throw new Error(error.message);
   }
