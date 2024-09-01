@@ -1,6 +1,7 @@
 import axios from "axios";
 import { shipmentDetail } from "../models/shipment.js";
-
+import "dotenv/config";
+const { RAJA_ONGKIR_API_KEY } = process.env;
 export const customerShipment = async (req, res) => {
   const { id: customerId } = req.decodedToken;
   const { shipmentId } = req.params;
@@ -33,7 +34,7 @@ export const province = async (req, res) => {
     const result = await axios
       .get("https://api.rajaongkir.com/starter/province", {
         headers: {
-          key: "fc047c1ff364a797b715979366c0c960",
+          key: RAJA_ONGKIR_API_KEY,
         },
       })
       .then((res) => res.data.rajaongkir.results);
@@ -55,7 +56,7 @@ export const city = async (req, res) => {
     const result = await axios
       .get(`https://api.rajaongkir.com/starter/city?province=${province_id}`, {
         headers: {
-          key: "fc047c1ff364a797b715979366c0c960",
+          key: RAJA_ONGKIR_API_KEY,
         },
       })
       .then((res) => res.data.rajaongkir.results);
@@ -83,7 +84,7 @@ export const shipmentCost = async (req, res) => {
     const result = await axios
       .post(`https://api.rajaongkir.com/starter/cost`, data, {
         headers: {
-          key: "fc047c1ff364a797b715979366c0c960",
+          key: RAJA_ONGKIR_API_KEY,
           "Content-Type": "application/x-www-form-urlencoded",
         },
       })
